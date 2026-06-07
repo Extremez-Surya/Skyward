@@ -116,7 +116,7 @@ export default function Header() {
               <a href="/dashboard" className="text-sm font-semibold text-text-primary hover:text-primary-600 transition-colors">
                 Dashboard
               </a>
-              <UserButton afterSignOutUrl="/" />
+              <UserButton />
             </>
           )}
         </div>
@@ -160,7 +160,7 @@ export default function Header() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div 
-            variants={menuVariants}
+            variants={menuVariants as any}
             initial="closed"
             animate="open"
             exit="closed"
@@ -216,7 +216,7 @@ export default function Header() {
                     Go to Dashboard
                   </Button>
                   <div className="flex justify-center p-4 bg-surface rounded-2xl">
-                    <UserButton afterSignOutUrl="/" showName />
+                    <UserButton showName />
                   </div>
                 </>
               )}

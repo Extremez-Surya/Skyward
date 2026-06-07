@@ -45,8 +45,8 @@ export default function ContactForm() {
         <div className="w-16 h-16 bg-success/10 text-success rounded-full flex items-center justify-center mx-auto">
           <CheckCircle size={32} />
         </div>
-        <h2 class="text-2xl font-bold text-text-primary">Thank you for your request!</h2>
-        <p class="text-text-secondary">
+        <h2 className="text-2xl font-bold text-text-primary">Thank you for your request!</h2>
+        <p className="text-text-secondary">
           Our team will review your requirements and contact you shortly.
         </p>
         <button 

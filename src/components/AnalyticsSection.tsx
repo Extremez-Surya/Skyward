@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, useTransform, useMotionValue } from 'framer-motion';
+import { motion, useTransform, useMotionValue, animate } from 'framer-motion';
 
 const Counter = ({ value, duration = 2 }: { value: string, duration?: number }) => {
   const numericValue = parseInt(value.replace(/[,+%.]/g, '')) || 0;
@@ -23,7 +23,7 @@ const Counter = ({ value, duration = 2 }: { value: string, duration?: number }) 
   return (
     <motion.span
       onViewportEnter={() => {
-        motion.animate(count, numericValue, { duration, ease: "easeOut" });
+        (animate as any)(count, numericValue, { duration, ease: "easeOut" });
       }}
       viewport={{ once: true }}
     >
