@@ -7,7 +7,7 @@ const isClientRoute = createRouteMatcher(['/client(.*)']);
 const isCandidateRoute = createRouteMatcher(['/candidate(.*)']);
 const isApiRoute = createRouteMatcher(['/api(.*)']);
 
-export const onRequest = clerkMiddleware(async (auth, context) => {
+export const onRequest = clerkMiddleware(async (auth, context, next) => {
   const { userId, redirectToSignIn } = auth();
 
   // Protect all dashboard routes
@@ -19,7 +19,7 @@ export const onRequest = clerkMiddleware(async (auth, context) => {
   if (!userId && isApiRoute(context.request)) {
       // Allow some public APIs if any (e.g. leads)
       if (context.url.pathname.startsWith('/api/leads') || context.url.pathname.startsWith('/api/webhooks')) {
-          return context.next();
+          return next();
       }
       return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
   }
@@ -55,11 +55,11 @@ export const onRequest = clerkMiddleware(async (auth, context) => {
         // --- API Route Protection ---
         if (isApiRoute(context.request)) {
             // Super Admin can access everything
-            if (role === 'admin') return context.next();
+            if (role === 'admin') return next();
 
             // Special cases for public/shared APIs
             if (path.startsWith('/api/leads') || path.startsWith('/api/webhooks') || path.startsWith('/api/auth')) {
-                return context.next();
+                return next();
             }
 
             // Define allowed prefixes per role
@@ -101,5 +101,5 @@ export const onRequest = clerkMiddleware(async (auth, context) => {
     }
   }
 
-  return context.next();
+  return next();
 });
