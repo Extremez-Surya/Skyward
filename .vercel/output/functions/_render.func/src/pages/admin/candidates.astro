@@ -1,0 +1,15 @@
+---
+import DashboardLayout from '../../layouts/dashboards/DashboardLayout.astro';
+import { getUserProfile } from '../../lib/user';
+import CandidateTable from '../../components/admin/CandidateTable';
+
+const { userId } = Astro.locals.auth();
+if (!userId) return Astro.redirect('/sign-in');
+const profile = await getUserProfile(userId);
+if (!profile) return Astro.redirect('/dashboard');
+---
+
+<DashboardLayout title="Candidates" role={profile.role as any}>
+    <CandidateTable client:load />
+</DashboardLayout>
+

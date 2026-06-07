@@ -1,0 +1,13 @@
+---
+import DashboardLayout from '../../layouts/dashboards/DashboardLayout.astro';
+import { getUserProfile } from '../../lib/user';
+const { userId } = Astro.locals.auth();
+if (!userId) return Astro.redirect('/sign-in');
+const profile = await getUserProfile(userId);
+if (!profile) return Astro.redirect('/dashboard');
+---
+<DashboardLayout title="Attendance" role="client">
+    <div class="p-12 bg-surface border border-surface/50 rounded-2xl text-center">
+        <p class="text-text-muted">This module is under development.</p>
+    </div>
+</DashboardLayout>

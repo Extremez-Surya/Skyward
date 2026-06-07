@@ -1,0 +1,77 @@
+---
+import DashboardLayout from '../../layouts/dashboards/DashboardLayout.astro';
+import { getUserProfile } from '../../lib/user';
+import AITools from '../../components/admin/AITools';
+
+const { userId } = Astro.locals.auth();
+
+if (!userId) {
+  return Astro.redirect('/sign-in');
+}
+
+const profile = await getUserProfile(userId);
+
+if (!profile || (profile.role !== 'admin' && profile.role !== 'manager')) {
+  return Astro.redirect('/dashboard');
+}
+---
+
+<DashboardLayout title="Admin Overview" role={profile.role as any}>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div class="p-6 bg-surface border border-surface/50 rounded-2xl">
+            <h3 class="text-sm font-medium text-text-muted mb-2">Active Workforce</h3>
+            <p class="text-3xl font-bold">124</p>
+            <div class="mt-2 text-xs text-green-500 font-medium">+12% from last month</div>
+        </div>
+        <div class="p-6 bg-surface border border-surface/50 rounded-2xl">
+            <h3 class="text-sm font-medium text-text-muted mb-2">New Candidates</h3>
+            <p class="text-3xl font-bold">48</p>
+            <div class="mt-2 text-xs text-blue-500 font-medium">8 pending screening</div>
+        </div>
+        <div class="p-6 bg-surface border border-surface/50 rounded-2xl">
+            <h3 class="text-sm font-medium text-text-muted mb-2">Open Requirements</h3>
+            <p class="text-3xl font-bold">15</p>
+            <div class="mt-2 text-xs text-yellow-500 font-medium">Across 5 clients</div>
+        </div>
+        <div class="p-6 bg-surface border border-surface/50 rounded-2xl">
+            <h3 class="text-sm font-medium text-text-muted mb-2">Pending Invoices</h3>
+            <p class="text-3xl font-bold">7</p>
+            <div class="mt-2 text-xs text-red-500 font-medium">3 overdue</div>
+        </div>
+    </div>
+
+    <div class="mb-12">
+        <h2 class="text-xl font-bold mb-6">AI Workspace</h2>
+        <AITools client:load />
+    </div>
+
+    <div>
+        <h2 class="text-xl font-bold mb-6">Recent Deployments</h2>
+        <div class="bg-surface border border-surface/50 rounded-2xl overflow-hidden">
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="border-b border-surface/50 bg-surface/50">
+                        <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-text-muted">Candidate</th>
+                        <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-text-muted">Client</th>
+                        <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-text-muted">Role</th>
+                        <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-text-muted">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-surface/50">
+                    <tr class="hover:bg-primary/5 transition-colors">
+                        <td class="px-6 py-4">Rahul Sharma</td>
+                        <td class="px-6 py-4">TechLogistics Ltd</td>
+                        <td class="px-6 py-4">Warehouse Associate</td>
+                        <td class="px-6 py-4"><span class="px-2 py-1 bg-green-500/10 text-green-500 text-xs font-medium rounded-full">Active</span></td>
+                    </tr>
+                    <tr class="hover:bg-primary/5 transition-colors">
+                        <td class="px-6 py-4">Anita Desai</td>
+                        <td class="px-6 py-4">Global Retail Corp</td>
+                        <td class="px-6 py-4">Security Guard</td>
+                        <td class="px-6 py-4"><span class="px-2 py-1 bg-green-500/10 text-green-500 text-xs font-medium rounded-full">Active</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</DashboardLayout>

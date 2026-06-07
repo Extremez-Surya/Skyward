@@ -1,0 +1,24 @@
+---
+import { getUserProfile } from '../lib/user';
+
+interface Props {
+  allowedRoles: ('admin' | 'manager' | 'client' | 'candidate')[];
+}
+
+const { allowedRoles } = Astro.props;
+const { userId } = Astro.locals.auth();
+
+if (!userId) {
+  return Astro.redirect('/sign-in');
+}
+
+const profile = await getUserProfile(userId);
+
+if (!profile || !allowedRoles.includes(profile.role as any)) {
+  return Astro.redirect('/dashboard');
+}
+
+const result = { profile };
+---
+
+<slot {profile} />

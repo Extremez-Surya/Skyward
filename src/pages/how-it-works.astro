@@ -1,0 +1,16 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import ProcessTimeline from '../components/ProcessTimeline';
+import CTA from '../components/CTA';
+---
+
+<Layout title="How It Works | Skyward HR Service">
+	<Header client:load />
+	<main class="pt-20 flex-grow">
+		<ProcessTimeline client:load />
+	</main>
+	<CTA client:visible />
+	<Footer />
+</Layout>

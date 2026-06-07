@@ -1,0 +1,16 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import ServicesOverview from '../components/ServicesOverview';
+import CTA from '../components/CTA';
+---
+
+<Layout title="Services | Skyward HR Service">
+	<Header client:load />
+	<main class="pt-20 flex-grow">
+		<ServicesOverview client:load />
+	</main>
+	<CTA client:visible />
+	<Footer />
+</Layout>

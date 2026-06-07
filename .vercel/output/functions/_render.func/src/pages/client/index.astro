@@ -1,0 +1,42 @@
+---
+import DashboardLayout from '../../layouts/dashboards/DashboardLayout.astro';
+import { getUserProfile } from '../../lib/user';
+
+const { userId } = Astro.locals.auth();
+
+if (!userId) {
+  return Astro.redirect('/sign-in');
+}
+
+const profile = await getUserProfile(userId);
+
+if (!profile || profile.role !== 'client') {
+  return Astro.redirect('/dashboard');
+}
+---
+
+<DashboardLayout title="Client Portal" role="client">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 bg-surface border border-surface/50 rounded-2xl">
+            <h3 class="text-sm font-medium text-text-muted mb-2">Active Workforce</h3>
+            <p class="text-3xl font-bold">42</p>
+        </div>
+        <div class="p-6 bg-surface border border-surface/50 rounded-2xl">
+            <h3 class="text-sm font-medium text-text-muted mb-2">Today's Attendance</h3>
+            <p class="text-3xl font-bold">38/42</p>
+            <div class="mt-2 text-xs text-yellow-500 font-medium">4 delayed/absent</div>
+        </div>
+        <div class="p-6 bg-surface border border-surface/50 rounded-2xl">
+            <h3 class="text-sm font-medium text-text-muted mb-2">Pending Requests</h3>
+            <p class="text-3xl font-bold">2</p>
+            <div class="mt-2 text-xs text-blue-500 font-medium">1 replacement, 1 new requirement</div>
+        </div>
+    </div>
+
+    <div class="mt-12">
+        <h2 class="text-xl font-bold mb-6">Recent Attendance</h2>
+        <div class="bg-surface border border-surface/50 rounded-2xl overflow-hidden text-center p-12">
+            <p class="text-text-muted">Attendance data will appear here.</p>
+        </div>
+    </div>
+</DashboardLayout>
