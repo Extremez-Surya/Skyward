@@ -13,7 +13,7 @@ import { resolveKeysWithKeylessFallback as resolveKeysWithKeylessFallback$1, cre
 import * as fs from "fs";
 import * as path from "path";
 import { DEV_BROWSER_KEY, setDevBrowserInURL } from "@clerk/shared/devBrowser";
-import { g as getUserProfile } from "./chunks/user_B_TByeCD.mjs";
+import { g as getUserProfile } from "./chunks/user_QsKzDSkD.mjs";
 import { s as sequence } from "./chunks/sequence_C1wAh64A.mjs";
 const __vite_import_meta_env__ = { "ASSETS_PREFIX": void 0, "BASE_URL": "/", "DEV": false, "MODE": "production", "PROD": true, "PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_test_bW9yYWwtY291Z2FyLTMwLmNsZXJrLmFjY291bnRzLmRldiQ", "SITE": "https://skywardhr.com", "SSR": true };
 var KEYLESS_DISABLED = isTruthy(getEnvVariable("PUBLIC_CLERK_KEYLESS_DISABLED")) || isTruthy(getEnvVariable("CLERK_KEYLESS_DISABLED")) || false;
@@ -531,14 +531,14 @@ const isHRRoute = createRouteMatcher(["/hr(.*)"]);
 const isClientRoute = createRouteMatcher(["/client(.*)"]);
 const isCandidateRoute = createRouteMatcher(["/candidate(.*)"]);
 const isApiRoute = createRouteMatcher(["/api(.*)"]);
-const onRequest$1 = clerkMiddleware(async (auth, context) => {
+const onRequest$1 = clerkMiddleware(async (auth, context, next) => {
   const { userId, redirectToSignIn } = auth();
   if (!userId && (isAdminRoute(context.request) || isHRRoute(context.request) || isClientRoute(context.request) || isCandidateRoute(context.request))) {
     return redirectToSignIn();
   }
   if (!userId && isApiRoute(context.request)) {
     if (context.url.pathname.startsWith("/api/leads") || context.url.pathname.startsWith("/api/webhooks")) {
-      return;
+      return next();
     }
     return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
   }
@@ -559,11 +559,11 @@ const onRequest$1 = clerkMiddleware(async (auth, context) => {
       if (isClientRoute(context.request) && role !== "admin" && role !== "manager" && role !== "client") {
         return context.redirect("/dashboard");
       }
-      if (isCandidateRoute(context.request) && role !== "candidate" && role !== "admin" && role !== "manager") {
-        return context.redirect("/dashboard");
-      }
       if (isApiRoute(context.request)) {
-        if (role === "admin") return;
+        if (role === "admin") return next();
+        if (path2.startsWith("/api/leads") || path2.startsWith("/api/webhooks") || path2.startsWith("/api/auth")) {
+          return next();
+        }
         const allowedApiPrefixes = {
           manager: [
             "/api/candidates",
@@ -575,12 +575,10 @@ const onRequest$1 = clerkMiddleware(async (auth, context) => {
             "/api/ai",
             "/api/requirements",
             "/api/invoices",
-            // View/Download only (handled in logic or RLS)
             "/api/payments"
           ],
           client: [
             "/api/clients",
-            // Restricted by RLS usually
             "/api/requirements",
             "/api/attendance",
             "/api/invoices",
@@ -589,22 +587,19 @@ const onRequest$1 = clerkMiddleware(async (auth, context) => {
           ],
           candidate: [
             "/api/candidates",
-            // Own profile
             "/api/documents",
             "/api/attendance",
             "/api/notifications"
           ]
         };
         const allowed = allowedApiPrefixes[role]?.some((prefix) => path2.startsWith(prefix));
-        if (path2.startsWith("/api/leads") || path2.startsWith("/api/webhooks") || path2.startsWith("/api/auth")) {
-          return;
-        }
         if (!allowed) {
           return new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 });
         }
       }
     }
   }
+  return next();
 });
 const onRequest = sequence(
   onRequest$1

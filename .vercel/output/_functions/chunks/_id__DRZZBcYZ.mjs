@@ -1,0 +1,28 @@
+import { s as supabase } from "./supabase_CCoL1XUf.mjs";
+import { b as apiError, a as apiSuccess } from "./api-responses_DDA2u443.mjs";
+const GET = async ({ params }) => {
+  const { id } = params;
+  const { data, error } = await supabase.from("invoices").select("*, clients(*)").eq("id", id).single();
+  if (error) return apiError("Invoice not found", [], 404);
+  return apiSuccess(data);
+};
+const PATCH = async ({ params, request }) => {
+  const { id } = params;
+  try {
+    const body = await request.json();
+    const { data, error } = await supabase.from("invoices").update(body).eq("id", id).select().single();
+    if (error) return apiError(error.message, [], 500);
+    return apiSuccess(data, "Invoice updated successfully");
+  } catch (err) {
+    return apiError("Invalid request body", [], 400);
+  }
+};
+const _page = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  GET,
+  PATCH
+}, Symbol.toStringTag, { value: "Module" }));
+const page = () => _page;
+export {
+  page
+};
