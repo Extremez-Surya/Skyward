@@ -19,7 +19,7 @@ export const onRequest = clerkMiddleware(async (auth, context) => {
   if (!userId && isApiRoute(context.request)) {
       // Allow some public APIs if any (e.g. leads)
       if (context.url.pathname.startsWith('/api/leads') || context.url.pathname.startsWith('/api/webhooks')) {
-          return;
+          return context.next();
       }
       return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
   }
@@ -52,15 +52,15 @@ export const onRequest = clerkMiddleware(async (auth, context) => {
             return context.redirect('/dashboard');
         }
 
-        // Candidate Routes: CANDIDATE only
-        if (isCandidateRoute(context.request) && role !== 'candidate' && role !== 'admin' && role !== 'manager') {
-            return context.redirect('/dashboard');
-        }
-
         // --- API Route Protection ---
         if (isApiRoute(context.request)) {
             // Super Admin can access everything
-            if (role === 'admin') return;
+            if (role === 'admin') return context.next();
+
+            // Special cases for public/shared APIs
+            if (path.startsWith('/api/leads') || path.startsWith('/api/webhooks') || path.startsWith('/api/auth')) {
+                return context.next();
+            }
 
             // Define allowed prefixes per role
             const allowedApiPrefixes: Record<string, string[]> = {
@@ -73,11 +73,11 @@ export const onRequest = clerkMiddleware(async (auth, context) => {
                     '/api/notifications',
                     '/api/ai',
                     '/api/requirements',
-                    '/api/invoices', // View/Download only (handled in logic or RLS)
+                    '/api/invoices',
                     '/api/payments'
                 ],
                 client: [
-                    '/api/clients', // Restricted by RLS usually
+                    '/api/clients',
                     '/api/requirements',
                     '/api/attendance',
                     '/api/invoices',
@@ -85,7 +85,7 @@ export const onRequest = clerkMiddleware(async (auth, context) => {
                     '/api/notifications'
                 ],
                 candidate: [
-                    '/api/candidates', // Own profile
+                    '/api/candidates',
                     '/api/documents',
                     '/api/attendance',
                     '/api/notifications'
@@ -93,11 +93,6 @@ export const onRequest = clerkMiddleware(async (auth, context) => {
             };
 
             const allowed = allowedApiPrefixes[role as string]?.some(prefix => path.startsWith(prefix));
-            
-            // Special cases for public/shared APIs
-            if (path.startsWith('/api/leads') || path.startsWith('/api/webhooks') || path.startsWith('/api/auth')) {
-                return;
-            }
 
             if (!allowed) {
                 return new Response(JSON.stringify({ error: 'Forbidden' }), { status: 403 });
@@ -105,4 +100,6 @@ export const onRequest = clerkMiddleware(async (auth, context) => {
         }
     }
   }
+
+  return context.next();
 });
