@@ -11,7 +11,8 @@ export default function CandidateDocumentUpload({ candidateId }: Props) {
   const [documents, setDocuments] = useState<{type: string, status: string}[]>([
     { type: 'Aadhaar Card', status: 'pending' },
     { type: 'PAN Card', status: 'pending' },
-    { type: 'Experience Letter', status: 'pending' }
+    { type: 'Resume', status: 'pending' },
+    { type: 'Photograph', status: 'pending' }
   ]);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>, docType: string) => {

@@ -10,8 +10,8 @@ const stats = [
 
 export default function Stats() {
   return (
-    <section className="py-20 bg-surface border-y border-surface-hover">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 bg-surface border-y border-border">
+      <div className="container-custom">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {stats.map((stat, index) => (
             <motion.div 
@@ -22,7 +22,7 @@ export default function Stats() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="flex flex-col items-center text-center"
             >
-              <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 tracking-tight">
+              <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-600 mb-2 tracking-tight">
                 {stat.value}
               </div>
               <div className="text-sm md:text-base font-medium text-text-muted uppercase tracking-wider">

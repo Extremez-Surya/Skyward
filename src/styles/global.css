@@ -1,25 +1,108 @@
 @import "tailwindcss";
 
+/* 
+ * Skyward HR Service - Design System v1.0
+ * Implementation based on DESIGN-SYSTEM.md
+ */
+
 @theme {
-  --color-primary: #2563EB;
-  --color-primary-hover: #1D4ED8;
-  --color-secondary: #0EA5E9;
-  --color-accent: #14B8A6;
-  --color-background: #030712;
-  --color-surface: #111827;
-  --color-surface-hover: #1F2937;
-  --color-text-main: #F9FAFB;
-  --color-text-muted: #9CA3AF;
+  /* Font Family */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Primary Colors */
+  --color-primary-50: #EFF6FF;
+  --color-primary-100: #DBEAFE;
+  --color-primary-200: #BFDBFE;
+  --color-primary-300: #93C5FD;
+  --color-primary-400: #60A5FA;
+  --color-primary-500: #3B82F6;
+  --color-primary-600: #2563EB;
+  --color-primary-700: #1D4ED8;
+  --color-primary-800: #1E40AF;
+  --color-primary-900: #1E3A8A;
+
+  /* Secondary Colors */
+  --color-secondary-500: #0EA5E9;
+  --color-secondary-600: #0284C7;
+  --color-secondary-700: #0369A1;
+
+  /* Accent Colors */
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+  --color-info: #06B6D4;
+
+  /* Border Radius overrides */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+
+  /* Shadows overrides */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.10);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.15);
+  --shadow-xl: 0 20px 25px rgba(0,0,0,0.20);
   
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Animations */
+  --animate-fade-up: fade-up 0.5s ease-out forwards;
+  --animate-slide-up: slide-up 0.5s ease-out forwards;
+  
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slide-up {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
 }
 
 @layer base {
+  :root {
+    --color-background: #FFFFFF;
+    --color-surface: #F8FAFC;
+    --color-card: #FFFFFF;
+    --color-border: #E2E8F0;
+    --color-text-primary: #0F172A;
+    --color-text-secondary: #475569;
+    --color-text-muted: #64748B;
+    
+    /* Map default semantic names to theme values for compatibility */
+    --background: var(--color-background);
+    --foreground: var(--color-text-primary);
+  }
+
+  .dark {
+    --color-background: #030712;
+    --color-surface: #0F172A;
+    --color-card: #111827;
+    --color-elevated-card: #1F2937;
+    --color-border: #334155;
+    --color-text-primary: #F8FAFC;
+    --color-text-secondary: #CBD5E1;
+    --color-text-muted: #94A3B8;
+    
+    --background: var(--color-background);
+    --foreground: var(--color-text-primary);
+  }
+
   body {
     background-color: var(--color-background);
-    color: var(--color-text-main);
+    color: var(--color-text-primary);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .container-custom {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }

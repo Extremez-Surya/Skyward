@@ -12,7 +12,7 @@ if (!userId) {
 
 const profile = await getUserProfile(userId);
 
-if (!profile || profile.role !== 'candidate') {
+if (!profile || (profile.role !== 'candidate' && profile.role !== 'admin' && profile.role !== 'manager')) {
   return Astro.redirect('/dashboard');
 }
 
@@ -24,7 +24,7 @@ const { data: candidate } = await supabase
   .single();
 ---
 
-<DashboardLayout title="My Portal" role="candidate">
+<DashboardLayout title="My Portal" role={profile.role as any}>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="p-8 bg-surface border border-surface/50 rounded-2xl">
             <h2 class="text-xl font-bold mb-4">Application Status</h2>

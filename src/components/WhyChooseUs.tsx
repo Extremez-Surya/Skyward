@@ -1,25 +1,28 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Zap, Repeat, HeadphonesIcon, FileText } from 'lucide-react';
+import { ShieldCheck, Zap, Repeat, HeadphonesIcon, FileText, Calendar, Maximize, Briefcase } from 'lucide-react';
 
 const features = [
-  { title: 'Verified Workforce', description: 'Stringent background checks and document verification for every candidate.', icon: ShieldCheck },
-  { title: 'Quick Deployment', description: 'Rapid turnaround time from requirement gathering to actual deployment.', icon: Zap },
+  { title: 'Fast Workforce Deployment', description: 'Rapid turnaround time from requirement gathering to actual deployment.', icon: Zap },
+  { title: 'Verified Candidates', description: 'Stringent background checks and document verification for every candidate.', icon: ShieldCheck },
+  { title: 'Dedicated HR Support', description: 'Dedicated account managers for seamless communication and support.', icon: HeadphonesIcon },
+  { title: 'Attendance Tracking', description: 'Real-time tracking and management of daily workforce attendance.', icon: Calendar },
   { title: 'Replacement Support', description: 'Hassle-free worker replacements to ensure zero operational downtime.', icon: Repeat },
-  { title: 'Professional Coordination', description: 'Dedicated account managers for seamless communication and support.', icon: HeadphonesIcon },
-  { title: 'Transparent Billing', description: 'Clear, GST-compliant invoicing with zero hidden charges or surprises.', icon: FileText },
+  { title: 'Scalable Staffing Solutions', description: 'Easily scale your workforce up or down based on business demands.', icon: Maximize },
+  { title: 'Industry-Specific Expertise', description: 'Tailored workforce solutions for logistics, retail, warehousing, and more.', icon: Briefcase },
+  { title: 'Transparent Communication', description: 'Clear, GST-compliant invoicing with zero hidden charges or surprises.', icon: FileText },
 ];
 
 export default function WhyChooseUs() {
   return (
     <section className="py-24 bg-background relative">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container-custom">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-            Why Businesses Trust Us
+          <h2 className="text-3xl md:text-5xl font-bold text-text-primary mb-6 tracking-tight">
+            Trusted Workforce Partner For Growing Businesses
           </h2>
-          <p className="text-lg text-text-muted">
-            We don't just supply manpower; we partner with you to manage your workforce end-to-end.
+          <p className="text-lg text-text-secondary">
+            We help businesses solve staffing challenges with rapid deployment, verified candidates, attendance management, replacement support, and workforce operations expertise.
           </p>
         </div>
 
@@ -33,14 +36,14 @@ export default function WhyChooseUs() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="flex items-start gap-4"
+                className="flex items-start gap-4 p-4 rounded-xl hover:bg-surface transition-colors"
               >
-                <div className="w-12 h-12 shrink-0 rounded-full bg-surface border border-surface-hover flex items-center justify-center text-accent">
+                <div className="w-12 h-12 shrink-0 rounded-md bg-primary-600/10 border border-primary-600/20 flex items-center justify-center text-primary-600">
                   <Icon size={24} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-text-main mb-2">{feature.title}</h3>
-                  <p className="text-text-muted text-sm leading-relaxed">{feature.description}</p>
+                  <h3 className="text-xl font-semibold text-text-primary mb-2">{feature.title}</h3>
+                  <p className="text-text-secondary text-sm leading-relaxed">{feature.description}</p>
                 </div>
               </motion.div>
             );

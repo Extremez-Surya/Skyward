@@ -2,7 +2,7 @@ import { createClerkClient } from "@clerk/backend";
 import { createClerkRequest, constants, AuthStatus, TokenType, signedOutAuthObject, getAuthObjectForAcceptedToken, createRedirect } from "@clerk/backend/internal";
 import { isDevelopmentFromSecretKey } from "@clerk/shared/keys";
 import { handleNetlifyCacheInDevInstance } from "@clerk/shared/netlifyCacheHandler";
-import { isMalformedURLError } from "@clerk/shared/pathMatcher";
+import { createPathMatcher, isMalformedURLError } from "@clerk/shared/pathMatcher";
 import { isHttpOrHttps } from "@clerk/shared/proxy";
 import { isDevelopmentEnvironment, isAutomatedEnvironment, handleValueOrFn } from "@clerk/shared/utils";
 import { a as authAsyncStorage } from "./chunks/async-local-storage.server_DQ7sHqiS.mjs";
@@ -13,8 +13,9 @@ import { resolveKeysWithKeylessFallback as resolveKeysWithKeylessFallback$1, cre
 import * as fs from "fs";
 import * as path from "path";
 import { DEV_BROWSER_KEY, setDevBrowserInURL } from "@clerk/shared/devBrowser";
-import { s as sequence } from "./chunks/sequence_rsVvLGim.mjs";
-const __vite_import_meta_env__ = { "ASSETS_PREFIX": void 0, "BASE_URL": "/", "DEV": false, "MODE": "production", "PROD": true, "SITE": void 0, "SSR": true };
+import { g as getUserProfile } from "./chunks/user_B_TByeCD.mjs";
+import { s as sequence } from "./chunks/sequence_C1wAh64A.mjs";
+const __vite_import_meta_env__ = { "ASSETS_PREFIX": void 0, "BASE_URL": "/", "DEV": false, "MODE": "production", "PROD": true, "PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_test_bW9yYWwtY291Z2FyLTMwLmNsZXJrLmFjY291bnRzLmRldiQ", "SITE": "https://skywardhr.com", "SSR": true };
 var KEYLESS_DISABLED = isTruthy(getEnvVariable("PUBLIC_CLERK_KEYLESS_DISABLED")) || isTruthy(getEnvVariable("CLERK_KEYLESS_DISABLED")) || false;
 var canUseKeyless = isDevelopmentEnvironment() && !isAutomatedEnvironment() && !KEYLESS_DISABLED;
 var cloudflareEnv;
@@ -50,7 +51,7 @@ function getContextEnvVar(envVarName, contextOrLocals) {
   if (typeof process !== "undefined" && process.env?.[envVarName]) {
     return process.env[envVarName];
   }
-  return Object.assign(__vite_import_meta_env__, { Path: "D:\\skyward\\node_modules\\.bin;D:\\node_modules\\.bin;C:\\Users\\VINAY KUMAR\\AppData\\Local\\nvm\\v26.2.0\\node_modules\\npm\\node_modules\\@npmcli\\run-script\\lib\\node-gyp-bin;C:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Python\\Python313\\Scripts;C:\\Program Files\\Python312\\;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\php-8.4.4;C:\\Users\\VINAY KUMAR\\AppData\\Local\\nvm;C:\\nvm4w\\nodejs;C;C:\\Program Files\\dotnet\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;c:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Code\\User\\globalStorage\\github.copilot-chat\\debugCommand;c:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Code\\User\\globalStorage\\github.copilot-chat\\copilotCli;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Microsoft VS Code;C:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Python\\Python313\\Scripts;C:\\Program Files\\Python312\\;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\php-8.4.4;C:\\Users\\VINAY KUMAR\\AppData\\Local\\nvm;C:\\nvm4w\\nodejs;C;C:\\Program Files\\dotnet\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Python\\Python313\\;C:\\Users\\VINAY KUMAR\\.local\\bin;C:\\Program Files\\Python312\\python.exe;C:\\Users\\VINAY KUMAR\\AppData\\Local\\pnpm;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Muse Hub\\lib;C:\\msys64\\mingw64\\bin;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Python\\Python313\\Scripts;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Python\\Python313;C:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Python\\Python313\\Scripts;C:\\Users\\VINAY KUMAR\\.bun\\bin;C:\\ffmpeg;C:\\Users\\VINAY KUMAR\\AppData\\Local\\nvm;C:\\nvm4w\\nodejs;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\VINAY KUMAR\\AppData\\Roaming\\npm;C:\\Users\\VINAY KUMAR\\.dotnet\\tools", PUBLIC: "C:\\Users\\Public" })[envVarName] || void 0;
+  return Object.assign(__vite_import_meta_env__, { CLERK_SECRET_KEY: "sk_test_5LQoJHgm1rvz9GvjWRbXJ8vw1sxE156qcS1YlHIZWu", Path: "D:\\skyward\\node_modules\\.bin;D:\\node_modules\\.bin;C:\\Users\\VINAY KUMAR\\AppData\\Local\\nvm\\v26.2.0\\node_modules\\npm\\node_modules\\@npmcli\\run-script\\lib\\node-gyp-bin;c:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Code\\User\\globalStorage\\github.copilot-chat\\debugCommand;c:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Code\\User\\globalStorage\\github.copilot-chat\\copilotCli;C:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Python\\Python313\\Scripts;C:\\Program Files\\Python312\\;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\php-8.4.4;C:\\Users\\VINAY KUMAR\\AppData\\Local\\nvm;C:\\nvm4w\\nodejs;C;C:\\Program Files\\dotnet\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;c:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Code\\User\\globalStorage\\github.copilot-chat\\debugCommand;c:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Code\\User\\globalStorage\\github.copilot-chat\\copilotCli;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Microsoft VS Code;C:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Python\\Python313\\Scripts;C:\\Program Files\\Python312\\;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\php-8.4.4;C:\\Users\\VINAY KUMAR\\AppData\\Local\\nvm;C:\\nvm4w\\nodejs;C;C:\\Program Files\\dotnet\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Python\\Python313\\;C:\\Users\\VINAY KUMAR\\.local\\bin;C:\\Program Files\\Python312\\python.exe;C:\\Users\\VINAY KUMAR\\AppData\\Local\\pnpm;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Muse Hub\\lib;C:\\msys64\\mingw64\\bin;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Python\\Python313\\Scripts;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Python\\Python313;C:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Python\\Python313\\Scripts;C:\\Users\\VINAY KUMAR\\.bun\\bin;C:\\ffmpeg;C:\\Users\\VINAY KUMAR\\AppData\\Local\\nvm;C:\\nvm4w\\nodejs;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\VINAY KUMAR\\AppData\\Roaming\\npm;C:\\Users\\VINAY KUMAR\\.dotnet\\tools", PUBLIC: "C:\\Users\\Public" })[envVarName] || void 0;
 }
 function getSafeEnv(context) {
   const locals = "locals" in context ? context.locals : context;
@@ -146,7 +147,7 @@ var createClerkClientWithOptions = (context, options) => createClerkClient({
     name: "@clerk/astro",
     version: "3.3.3",
     // eslint-disable-next-line turbo/no-undeclared-env-vars
-    environment: Object.assign(__vite_import_meta_env__, { Path: "D:\\skyward\\node_modules\\.bin;D:\\node_modules\\.bin;C:\\Users\\VINAY KUMAR\\AppData\\Local\\nvm\\v26.2.0\\node_modules\\npm\\node_modules\\@npmcli\\run-script\\lib\\node-gyp-bin;C:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Python\\Python313\\Scripts;C:\\Program Files\\Python312\\;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\php-8.4.4;C:\\Users\\VINAY KUMAR\\AppData\\Local\\nvm;C:\\nvm4w\\nodejs;C;C:\\Program Files\\dotnet\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;c:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Code\\User\\globalStorage\\github.copilot-chat\\debugCommand;c:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Code\\User\\globalStorage\\github.copilot-chat\\copilotCli;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Microsoft VS Code;C:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Python\\Python313\\Scripts;C:\\Program Files\\Python312\\;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\php-8.4.4;C:\\Users\\VINAY KUMAR\\AppData\\Local\\nvm;C:\\nvm4w\\nodejs;C;C:\\Program Files\\dotnet\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Python\\Python313\\;C:\\Users\\VINAY KUMAR\\.local\\bin;C:\\Program Files\\Python312\\python.exe;C:\\Users\\VINAY KUMAR\\AppData\\Local\\pnpm;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Muse Hub\\lib;C:\\msys64\\mingw64\\bin;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Python\\Python313\\Scripts;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Python\\Python313;C:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Python\\Python313\\Scripts;C:\\Users\\VINAY KUMAR\\.bun\\bin;C:\\ffmpeg;C:\\Users\\VINAY KUMAR\\AppData\\Local\\nvm;C:\\nvm4w\\nodejs;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\VINAY KUMAR\\AppData\\Roaming\\npm;C:\\Users\\VINAY KUMAR\\.dotnet\\tools", PUBLIC: "C:\\Users\\Public" }).MODE
+    environment: Object.assign(__vite_import_meta_env__, { CLERK_SECRET_KEY: "sk_test_5LQoJHgm1rvz9GvjWRbXJ8vw1sxE156qcS1YlHIZWu", Path: "D:\\skyward\\node_modules\\.bin;D:\\node_modules\\.bin;C:\\Users\\VINAY KUMAR\\AppData\\Local\\nvm\\v26.2.0\\node_modules\\npm\\node_modules\\@npmcli\\run-script\\lib\\node-gyp-bin;c:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Code\\User\\globalStorage\\github.copilot-chat\\debugCommand;c:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Code\\User\\globalStorage\\github.copilot-chat\\copilotCli;C:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Python\\Python313\\Scripts;C:\\Program Files\\Python312\\;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\php-8.4.4;C:\\Users\\VINAY KUMAR\\AppData\\Local\\nvm;C:\\nvm4w\\nodejs;C;C:\\Program Files\\dotnet\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;c:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Code\\User\\globalStorage\\github.copilot-chat\\debugCommand;c:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Code\\User\\globalStorage\\github.copilot-chat\\copilotCli;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Microsoft VS Code;C:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Python\\Python313\\Scripts;C:\\Program Files\\Python312\\;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;c:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\php-8.4.4;C:\\Users\\VINAY KUMAR\\AppData\\Local\\nvm;C:\\nvm4w\\nodejs;C;C:\\Program Files\\dotnet\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Python\\Python313\\;C:\\Users\\VINAY KUMAR\\.local\\bin;C:\\Program Files\\Python312\\python.exe;C:\\Users\\VINAY KUMAR\\AppData\\Local\\pnpm;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Muse Hub\\lib;C:\\msys64\\mingw64\\bin;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Python\\Python313\\Scripts;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Python\\Python313;C:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Python\\Python313\\Scripts;C:\\Users\\VINAY KUMAR\\.bun\\bin;C:\\ffmpeg;C:\\Users\\VINAY KUMAR\\AppData\\Local\\nvm;C:\\nvm4w\\nodejs;C:\\Users\\VINAY KUMAR\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\VINAY KUMAR\\AppData\\Roaming\\npm;C:\\Users\\VINAY KUMAR\\.dotnet\\tools", PUBLIC: "C:\\Users\\Public" }).MODE
   },
   telemetry: {
     disabled: getSafeEnv(context).telemetryDisabled,
@@ -521,7 +522,90 @@ var handleControlFlowErrors = (e, clerkRequest, requestState, context) => {
       throw e;
   }
 };
-const onRequest$1 = clerkMiddleware();
+var createRouteMatcher = (routes) => {
+  const matcher = createPathMatcher(routes);
+  return (req) => matcher(new URL(req.url).pathname);
+};
+const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
+const isHRRoute = createRouteMatcher(["/hr(.*)"]);
+const isClientRoute = createRouteMatcher(["/client(.*)"]);
+const isCandidateRoute = createRouteMatcher(["/candidate(.*)"]);
+const isApiRoute = createRouteMatcher(["/api(.*)"]);
+const onRequest$1 = clerkMiddleware(async (auth, context) => {
+  const { userId, redirectToSignIn } = auth();
+  if (!userId && (isAdminRoute(context.request) || isHRRoute(context.request) || isClientRoute(context.request) || isCandidateRoute(context.request))) {
+    return redirectToSignIn();
+  }
+  if (!userId && isApiRoute(context.request)) {
+    if (context.url.pathname.startsWith("/api/leads") || context.url.pathname.startsWith("/api/webhooks")) {
+      return;
+    }
+    return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+  }
+  if (userId) {
+    const profile = await getUserProfile(userId);
+    if (!profile && (isAdminRoute(context.request) || isHRRoute(context.request) || isClientRoute(context.request) || isCandidateRoute(context.request))) {
+      return context.redirect("/");
+    }
+    if (profile) {
+      const role = profile.role;
+      const path2 = context.url.pathname;
+      if (isAdminRoute(context.request) && role !== "admin") {
+        return context.redirect("/dashboard");
+      }
+      if (isHRRoute(context.request) && role !== "admin" && role !== "manager") {
+        return context.redirect("/dashboard");
+      }
+      if (isClientRoute(context.request) && role !== "admin" && role !== "manager" && role !== "client") {
+        return context.redirect("/dashboard");
+      }
+      if (isCandidateRoute(context.request) && role !== "candidate" && role !== "admin" && role !== "manager") {
+        return context.redirect("/dashboard");
+      }
+      if (isApiRoute(context.request)) {
+        if (role === "admin") return;
+        const allowedApiPrefixes = {
+          manager: [
+            "/api/candidates",
+            "/api/deployments",
+            "/api/attendance",
+            "/api/replacement-requests",
+            "/api/reports",
+            "/api/notifications",
+            "/api/ai",
+            "/api/requirements",
+            "/api/invoices",
+            // View/Download only (handled in logic or RLS)
+            "/api/payments"
+          ],
+          client: [
+            "/api/clients",
+            // Restricted by RLS usually
+            "/api/requirements",
+            "/api/attendance",
+            "/api/invoices",
+            "/api/replacement-requests",
+            "/api/notifications"
+          ],
+          candidate: [
+            "/api/candidates",
+            // Own profile
+            "/api/documents",
+            "/api/attendance",
+            "/api/notifications"
+          ]
+        };
+        const allowed = allowedApiPrefixes[role]?.some((prefix) => path2.startsWith(prefix));
+        if (path2.startsWith("/api/leads") || path2.startsWith("/api/webhooks") || path2.startsWith("/api/auth")) {
+          return;
+        }
+        if (!allowed) {
+          return new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 });
+        }
+      }
+    }
+  }
+});
 const onRequest = sequence(
   onRequest$1
 );

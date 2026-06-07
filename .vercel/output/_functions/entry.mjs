@@ -1,4 +1,4 @@
-import { e } from "./chunks/entrypoint_B9LsAA9s.mjs";
+import { e } from "./chunks/entrypoint_BJdmQt7F.mjs";
 export {
   e as default
 };

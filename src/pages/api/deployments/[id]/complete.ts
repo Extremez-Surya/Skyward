@@ -1,0 +1,16 @@
+import type { APIRoute } from 'astro';
+import { supabase } from '../../../../lib/supabase';
+import { apiSuccess, apiError } from '../../../../lib/api-responses';
+
+export const PATCH: APIRoute = async ({ params }) => {
+  const { id } = params;
+  const { data, error } = await supabase
+    .from('deployments')
+    .update({ status: 'completed' })
+    .eq('id', id)
+    .select()
+    .single();
+    
+  if (error) return apiError(error.message, [], 500);
+  return apiSuccess(data, 'Deployment completed successfully');
+};

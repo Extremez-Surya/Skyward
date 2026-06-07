@@ -15,7 +15,28 @@ import Footer from '../components/Footer';
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
+<Layout 
+	title="Skyward HR | Leading Manpower Supply & Staffing Company in India"
+	description="Skyward HR provides workforce management, staffing solutions, warehouse staffing, logistics staffing and contract manpower services across India."
+>
+	<script type="application/ld+json" slot="head">
+		{
+			"@context": "https://schema.org",
+			"@type": "Organization",
+			"name": "Skyward HR Service",
+			"url": "https://skywardhr.com",
+			"logo": "https://skywardhr.com/logo.png",
+			"sameAs": [
+				"https://www.linkedin.com/company/skyward-hr",
+				"https://twitter.com/skywardhr"
+			],
+			"contactPoint": {
+				"@type": "ContactPoint",
+				"telephone": "+91-XXXXXXXXXX",
+				"contactType": "customer service"
+			}
+		}
+	</script>
 	<Header client:load />
 	<main>
 		<Hero client:load />

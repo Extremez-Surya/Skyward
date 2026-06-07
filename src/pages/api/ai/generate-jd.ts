@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import openai from '../../../lib/openai';
+import { model } from '../../../lib/gemini';
 
 export const POST: APIRoute = async ({ request }) => {
   const { role_name } = await request.json();
@@ -9,26 +9,20 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   try {
-    const response = await openai.chat.completions.create({
-      model: 'gpt-4o',
-      messages: [
-        {
-          role: 'system',
-          content: 'You are an expert HR manager. Generate a professional and detailed job description based on the provided role name. Include responsibilities, requirements, and key skills.',
-        },
-        {
-          role: 'user',
-          content: `Role: ${role_name}`,
-        },
-      ],
-    });
+    const prompt = `You are an expert HR manager. Generate a professional and detailed job description based on the provided role name. Include responsibilities, requirements, and key skills.
+    
+    Role: ${role_name}`;
 
-    const jd = response.choices[0].message.content;
-    return new Response(JSON.stringify({ jd }), {
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+
+    return new Response(JSON.stringify({ jd: text }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error: any) {
+    console.error('Gemini JD Generation Error:', error);
     return new Response(JSON.stringify({ error: error.message }), { status: 500 });
   }
 };

@@ -1,6 +1,7 @@
 ---
 import DashboardLayout from '../../layouts/dashboards/DashboardLayout.astro';
 import { getUserProfile } from '../../lib/user';
+import AnalyticsChart from '../../components/AnalyticsChart';
 
 const { userId } = Astro.locals.auth();
 
@@ -10,13 +11,24 @@ if (!userId) {
 
 const profile = await getUserProfile(userId);
 
-if (!profile || profile.role !== 'client') {
+if (!profile || (profile.role !== 'client' && profile.role !== 'admin' && profile.role !== 'manager')) {
   return Astro.redirect('/dashboard');
 }
+
+// Mock attendance trend
+const attendanceTrend = [
+  { label: 'Mon', value: 95 },
+  { label: 'Tue', value: 92 },
+  { label: 'Wed', value: 98 },
+  { label: 'Thu', value: 94 },
+  { label: 'Fri', value: 90 },
+  { label: 'Sat', value: 85 },
+  { label: 'Sun', value: 88 },
+];
 ---
 
-<DashboardLayout title="Client Portal" role="client">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<DashboardLayout title="Client Portal" role={profile.role as any}>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         <div class="p-6 bg-surface border border-surface/50 rounded-2xl">
             <h3 class="text-sm font-medium text-text-muted mb-2">Active Workforce</h3>
             <p class="text-3xl font-bold">42</p>
@@ -30,6 +42,27 @@ if (!profile || profile.role !== 'client') {
             <h3 class="text-sm font-medium text-text-muted mb-2">Pending Requests</h3>
             <p class="text-3xl font-bold">2</p>
             <div class="mt-2 text-xs text-blue-500 font-medium">1 replacement, 1 new requirement</div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <AnalyticsChart 
+            client:load 
+            title="Weekly Attendance Rate (%)" 
+            data={attendanceTrend} 
+            color="bg-accent" 
+            suffix="%" 
+        />
+        <div class="p-8 bg-primary/5 border border-primary/20 rounded-2xl flex flex-col justify-center">
+            <h2 class="text-2xl font-bold mb-4">Quick Actions</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <a href="/client/requests" class="p-4 bg-surface border border-surface-hover rounded-xl text-center hover:border-primary/50 transition-colors">
+                    <span class="block text-sm font-bold">Raise Request</span>
+                </a>
+                <a href="/client/attendance" class="p-4 bg-surface border border-surface-hover rounded-xl text-center hover:border-primary/50 transition-colors">
+                    <span class="block text-sm font-bold">View Reports</span>
+                </a>
+            </div>
         </div>
     </div>
 

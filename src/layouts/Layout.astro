@@ -5,29 +5,53 @@ import AIChatAssistant from '../components/AIChatAssistant';
 interface Props {
 	title?: string;
 	description?: string;
+	image?: string;
+	canonicalURL?: string;
+	type?: string;
 }
 
 const { 
 	title = "Skyward HR Service | Workforce Management Platform", 
-	description = "Reliable Workforce Solutions for Modern Businesses. Manpower Supply, Staffing Solutions, HR Support Services, and Workforce Management." 
+	description = "Reliable Workforce Solutions for Modern Businesses. Manpower Supply, Staffing Solutions, HR Support Services, and Workforce Management.",
+	image = "/og-image.jpg",
+	canonicalURL = Astro.url.href,
+	type = "website"
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
+		
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalURL} />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content={type} />
+		<meta property="og:url" content={Astro.url.href} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={new URL(image, Astro.url)} />
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={Astro.url.href} />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content={new URL(image, Astro.url)} />
+
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+		<slot name="head" />
 	</head>
-	<body class="min-h-screen bg-background text-text-main flex flex-col">
+	<body class="min-h-screen bg-background text-foreground flex flex-col">
 		<slot />
 		<AIChatAssistant client:load />
 	</body>

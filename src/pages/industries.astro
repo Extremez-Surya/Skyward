@@ -2,20 +2,51 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import IndustriesComponent from '../components/Industries';
 import CTA from '../components/CTA';
+import { Truck, Box, ShoppingCart, Building2, GraduationCap, UtensilsCrossed, Users, Globe, Briefcase } from 'lucide-react';
+
+const industryList = [
+  { name: 'Logistics', slug: 'logistics', icon: Truck, description: 'Workforce solutions for transportation and delivery operations.' },
+  { name: 'Warehousing', slug: 'warehousing', icon: Box, description: 'Staffing support for warehouses, fulfillment centers, and inventory operations.' },
+  { name: 'E-commerce', slug: 'e-commerce', icon: ShoppingCart, description: 'Flexible workforce for online retail and fulfillment operations.' },
+  { name: 'Retail', slug: 'retail', icon: Users, description: 'Store operations, customer support, and sales assistance staffing.' },
+  { name: 'Corporate', slug: 'corporate', icon: Building2, description: 'Office support and administrative workforce solutions.' },
+  { name: 'Quick Commerce', slug: 'quick-commerce', icon: Globe, description: 'Powering 10-minute deliveries with fast manpower.' },
+  { name: 'Educational Institutions', slug: 'education', icon: GraduationCap, description: 'Safe and verified staff for campus operations.' },
+  { name: 'Food Services', slug: 'food-services', icon: UtensilsCrossed, description: 'Hygienic support for kitchens and restaurants.' },
+  { name: 'SMEs', slug: 'sme', icon: Briefcase, description: 'Flexible workforce management for growing businesses.' }
+];
 ---
 
-<Layout title="Industries | Skyward HR Service">
+<Layout title="Industries We Serve | Skyward HR Service">
 	<Header client:load />
-	<main class="pt-20 flex-grow">
-		<div class="pt-24 pb-12 text-center container mx-auto px-4">
-			<h1 class="text-4xl md:text-6xl font-bold text-white mb-6">Industries We Serve</h1>
+	<main class="pt-32 pb-20">
+		<div class="text-center container mx-auto px-4 mb-20">
+			<h1 class="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">Industries We <span class="text-primary">Serve</span></h1>
 			<p class="text-xl text-text-muted max-w-2xl mx-auto">
-				Tailored workforce solutions for specific industry needs.
+				Skyward HR provides workforce solutions across a wide range of industries.
 			</p>
 		</div>
-		<IndustriesComponent client:load />
+		
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {industryList.map((industry) => (
+          <a href={`/industries/${industry.slug}`} class="p-8 bg-surface border border-surface-hover rounded-2xl hover:border-primary/50 transition-all group">
+            <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+              <industry.icon size={24} />
+            </div>
+            <h3 class="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">{industry.name}</h3>
+            <p class="text-text-muted leading-relaxed mb-6">{industry.description}</p>
+            <span class="text-sm font-semibold text-primary inline-flex items-center gap-2">
+              View Solutions 
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
 	</main>
 	<CTA client:visible />
 	<Footer />

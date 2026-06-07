@@ -1,0 +1,109 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import CTA from '../components/CTA';
+
+const lastUpdated = "June 7, 2026";
+---
+
+<Layout title="Privacy Policy | Skyward HR Service">
+  <Header client:load />
+  
+  <main class="pt-32 pb-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+      <div className="mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Privacy Policy</h1>
+        <p class="text-text-muted">Last Updated: {lastUpdated}</p>
+      </div>
+
+      <div class="prose prose-invert prose-blue max-w-none space-y-8 text-text-main/90">
+        <section>
+          <h2 class="text-2xl font-bold mb-4 text-text-main">1. Introduction</h2>
+          <p>
+            Skyward HR Service Private Limited ("we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our workforce management platform.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold mb-4 text-text-main">2. Information We Collect</h2>
+          <div class="space-y-4">
+            <h3 class="text-xl font-semibold text-text-main">A. Candidate Information</h3>
+            <p>
+              When you register as a candidate, we collect personal details including but not limited to your name, contact information, work experience, Aadhaar, PAN, and other documentation required for verification and employment.
+            </p>
+            
+            <h3 class="text-xl font-semibold text-text-main">B. Client Information</h3>
+            <p>
+              For our business clients, we collect company details, contact person information, billing addresses, and specific workforce requirements.
+            </p>
+            
+            <h3 class="text-xl font-semibold text-text-main">C. Automatically Collected Information</h3>
+            <p>
+              We automatically collect certain information when you visit our platform, such as your IP address, browser type, operating system, and usage patterns through cookies and similar technologies.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold mb-4 text-text-main">3. How We Use Your Information</h2>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>To provide and maintain our Service.</li>
+            <li>To process candidate applications and verify credentials.</li>
+            <li>To match candidates with client requirements.</li>
+            <li>To manage attendance and payroll processing.</li>
+            <li>To communicate with you regarding updates, security alerts, and support.</li>
+            <li>To comply with legal and regulatory obligations.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold mb-4 text-text-main">4. Data Sharing and Disclosure</h2>
+          <p>
+            We may share your information with:
+          </p>
+          <ul class="list-disc pl-6 space-y-2 mt-4">
+            <li><strong>Clients:</strong> Candidate profiles are shared with clients for recruitment and deployment purposes.</li>
+            <li><strong>Service Providers:</strong> Third-party vendors who assist with background verification, authentication (Clerk), and data storage (Supabase).</li>
+            <li><strong>Legal Requirements:</strong> When required by law or to protect our rights.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold mb-4 text-text-main">5. Data Security</h2>
+          <p>
+            We implement industry-standard security measures to protect your personal data. However, no method of transmission over the Internet is 100% secure, and we cannot guarantee absolute security.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold mb-4 text-text-main">6. Your Rights</h2>
+          <p>
+            Depending on your location, you may have rights to access, correct, or delete your personal information. You can manage your profile data through your respective portal or contact us for assistance.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold mb-4 text-text-main">7. Changes to This Policy</h2>
+          <p>
+            We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold mb-4 text-text-main">8. Contact Us</h2>
+          <p>
+            If you have any questions about this Privacy Policy, please contact us at:
+            <br />
+            <strong>Email:</strong> privacy@skywardhr.com
+            <br />
+            <strong>Address:</strong> 123 Business Avenue, Tech Park, Metropolis 500012
+          </p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <CTA client:visible />
+  <Footer />
+</Layout>

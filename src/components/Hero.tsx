@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar } from 'lucide-react';
+import { Button } from './ui/Button';
 
 export default function Hero() {
   return (
@@ -8,19 +9,18 @@ export default function Hero() {
       {/* Background Elements */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-background" />
-        {/* Animated grid or radial gradient could go here */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/20 rounded-full blur-[120px]" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-600/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary-500/10 rounded-full blur-[120px]" />
       </div>
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="container-custom relative z-10 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-surface-hover mb-8"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-border mb-8"
         >
-          <span className="flex w-2 h-2 rounded-full bg-accent animate-pulse" />
+          <span className="flex w-2 h-2 rounded-full bg-secondary-500 animate-pulse" />
           <span className="text-sm font-medium text-text-muted">Enterprise-Grade Workforce Platform</span>
         </motion.div>
 
@@ -28,11 +28,11 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white mb-6"
+          className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-text-primary mb-6"
         >
-          Reliable Workforce Solutions <br className="hidden md:block" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-            for Modern Businesses
+          Build Your Workforce Faster <br className="hidden md:block" />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-secondary-500">
+            With Reliable Staffing Solutions
           </span>
         </motion.h1>
 
@@ -40,9 +40,9 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-2xl mx-auto text-lg md:text-xl text-text-muted mb-10 leading-relaxed"
+          className="max-w-2xl mx-auto text-lg md:text-xl text-text-secondary mb-10 leading-relaxed"
         >
-          Manpower Supply, Staffing Solutions, HR Support Services, and Workforce Management. Deploy, manage, and scale your workforce efficiently.
+          From warehouse staff and delivery executives to retail and field teams, Skyward HR provides trained manpower and workforce management services across industries.
         </motion.p>
 
         <motion.div 
@@ -51,20 +51,23 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <a 
-            href="/contact" 
-            className="w-full sm:w-auto px-8 py-4 rounded-lg bg-primary hover:bg-primary-hover text-white text-base font-semibold transition-all hover:shadow-[0_0_30px_rgba(37,99,235,0.4)] flex items-center justify-center gap-2"
+          <Button 
+            size="lg"
+            onClick={() => window.location.href = '/contact'}
+            rightIcon={ArrowRight}
+            className="w-full sm:w-auto"
           >
             Request Workforce
-            <ArrowRight size={20} />
-          </a>
-          <a 
-            href="/book-consultation" 
-            className="w-full sm:w-auto px-8 py-4 rounded-lg bg-surface border border-surface-hover hover:border-text-muted text-text-main text-base font-semibold transition-all flex items-center justify-center gap-2"
+          </Button>
+          <Button 
+            variant="secondary"
+            size="lg"
+            onClick={() => window.location.href = '/contact'}
+            leftIcon={Calendar}
+            className="w-full sm:w-auto"
           >
-            <Calendar size={20} className="text-text-muted" />
-            Book Consultation
-          </a>
+            Talk To Our Team
+          </Button>
         </motion.div>
       </div>
     </section>

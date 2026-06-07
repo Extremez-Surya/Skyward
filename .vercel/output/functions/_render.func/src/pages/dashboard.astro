@@ -18,8 +18,9 @@ if (!profile) {
 // Redirect based on role
 switch (profile.role) {
   case 'admin':
-  case 'manager':
     return Astro.redirect('/admin');
+  case 'manager':
+    return Astro.redirect('/hr');
   case 'client':
     return Astro.redirect('/client');
   case 'candidate':

@@ -115,7 +115,30 @@ CREATE TABLE IF NOT EXISTS invoices (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- PAYMENTS TABLE
+CREATE TABLE IF NOT EXISTS payments (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    invoice_id UUID REFERENCES invoices(id) ON DELETE CASCADE,
+    amount DECIMAL(12, 2) NOT NULL,
+    payment_method TEXT,
+    transaction_id TEXT,
+    payment_date TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- RLS Policies (Basic setup)
+-- NOTIFICATIONS TABLE
+CREATE TABLE IF NOT EXISTS notifications (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    title TEXT NOT NULL,
+    message TEXT,
+    type TEXT,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE clients ENABLE ROW LEVEL SECURITY;
 ALTER TABLE candidates ENABLE ROW LEVEL SECURITY;
@@ -131,3 +154,4 @@ CREATE POLICY "Users can view own data" ON users FOR SELECT USING (clerk_id = au
 -- Note: Supabase auth.uid() is usually for Supabase Auth. 
 -- Since we use Clerk, we might need a custom claim or just check the clerk_id.
 -- For now, we'll leave detailed RLS for later when we define the Supabase/Clerk sync strategy.
+`n-- LEADS TABLE`nCREATE TABLE IF NOT EXISTS leads (`n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),`n    full_name TEXT NOT NULL,`n    company_name TEXT,`n    email TEXT,`n    phone TEXT,`n    requirement TEXT,`n    status TEXT DEFAULT 'pending',`n    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()`n);`n`nALTER TABLE leads ENABLE ROW LEVEL SECURITY;`nCREATE POLICY 'Admins can view leads' ON leads FOR SELECT USING (true); -- Simplified for now

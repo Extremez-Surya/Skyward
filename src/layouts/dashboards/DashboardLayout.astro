@@ -11,11 +11,20 @@ const { title, role } = Astro.props;
 
 const navItems = {
     admin: [
-        { name: 'Overview', href: '/admin', icon: 'LayoutDashboard' },
-        { name: 'Candidates', href: '/admin/candidates', icon: 'Users' },
-        { name: 'Clients', href: '/admin/clients', icon: 'Building2' },
-        { name: 'Deployments', href: '/admin/deployments', icon: 'UserCheck' },
-        { name: 'Invoices', href: '/admin/invoices', icon: 'FileText' },
+        { name: 'Admin Overview', href: '/admin', icon: 'LayoutDashboard' },
+        { name: 'HR Overview', href: '/hr', icon: 'UserCheck' },
+        { name: 'Candidates', href: '/hr/candidates', icon: 'Users' },
+        { name: 'Clients', href: '/hr/clients', icon: 'Building2' },
+        { name: 'Deployments', href: '/hr/deployments', icon: 'UserCheck' },
+        { name: 'Invoices', href: '/hr/invoices', icon: 'FileText' },
+        { name: 'Users', href: '/admin/users', icon: 'Settings' },
+    ],
+    manager: [
+        { name: 'Overview', href: '/hr', icon: 'LayoutDashboard' },
+        { name: 'Candidates', href: '/hr/candidates', icon: 'Users' },
+        { name: 'Clients', href: '/hr/clients', icon: 'Building2' },
+        { name: 'Deployments', href: '/hr/deployments', icon: 'UserCheck' },
+        { name: 'Invoices', href: '/hr/invoices', icon: 'FileText' },
     ],
     client: [
         { name: 'Overview', href: '/client', icon: 'LayoutDashboard' },
@@ -29,7 +38,6 @@ const navItems = {
         { name: 'Documents', href: '/candidate/documents', icon: 'FileUp' },
         { name: 'Applications', href: '/candidate/applications', icon: 'Briefcase' },
     ],
-    manager: [] // Fallback or same as admin
 };
 
 const items = navItems[role] || [];
@@ -38,36 +46,36 @@ const items = navItems[role] || [];
 <Layout title={`${title} | Skyward HR`}>
     <div class="flex min-h-screen bg-background">
         <!-- Sidebar -->
-        <aside class="w-64 border-r border-surface/50 bg-surface/30 backdrop-blur-md hidden md:flex flex-col sticky top-0 h-screen">
-            <div class="p-6">
-                <a href="/" className="flex items-center gap-2 group">
-                    <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+        <aside class="w-[280px] border-r border-border bg-surface/30 backdrop-blur-md hidden md:flex flex-col sticky top-0 h-screen">
+            <div class="h-[72px] flex items-center px-6 border-b border-border">
+                <a href="/" class="flex items-center gap-2 group">
+                    <div class="w-8 h-8 bg-primary-600 rounded-md flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                             <path d="M2 17L12 22L22 17" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                             <path d="M2 12L12 17L22 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                     </div>
-                    <span className="text-lg font-bold tracking-tight">Skyward HR</span>
+                    <span class="text-lg font-bold tracking-tight text-text-primary">Skyward HR</span>
                 </a>
             </div>
 
-            <nav class="flex-1 px-4 py-4 space-y-1">
+            <nav class="flex-1 px-4 py-6 space-y-1">
                 {items.map((item) => (
                     <a 
                         href={item.href}
-                        class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-text-muted hover:text-primary hover:bg-primary/5 transition-all"
+                        class="flex items-center gap-3 px-4 py-2.5 rounded-md text-sm font-medium text-text-secondary hover:text-primary-600 hover:bg-primary-600/5 transition-all"
                     >
                         <span>{item.name}</span>
                     </a>
                 ))}
             </nav>
 
-            <div class="p-4 border-t border-surface/50">
+            <div class="p-4 border-t border-border">
                 <div class="flex items-center gap-3 px-4 py-2">
                     <UserButton />
                     <div class="flex flex-col">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-text-muted">{role}</span>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-text-muted">{role}</span>
                     </div>
                 </div>
             </div>
@@ -76,15 +84,15 @@ const items = navItems[role] || [];
         <!-- Main Content -->
         <div class="flex-1 flex flex-col min-w-0">
             <!-- Mobile Header -->
-            <header class="md:hidden flex items-center justify-between p-4 border-b border-surface/50 bg-surface/30 backdrop-blur-md">
-                <a href="/" class="text-lg font-bold">Skyward HR</a>
+            <header class="md:hidden flex items-center justify-between h-[72px] px-4 border-b border-border bg-surface/30 backdrop-blur-md">
+                <a href="/" class="text-lg font-bold text-text-primary">Skyward HR</a>
                 <UserButton />
             </header>
 
-            <main class="flex-1 p-6 md:p-8">
+            <main class="flex-1 p-6 md:p-8 bg-background">
                 <div class="max-w-7xl mx-auto">
                     <div class="flex justify-between items-center mb-8">
-                        <h1 class="text-2xl font-bold text-text-main">{title}</h1>
+                        <h1 class="text-2xl font-bold text-text-primary">{title}</h1>
                     </div>
                     <slot />
                 </div>
