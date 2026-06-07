@@ -5,7 +5,7 @@ import path from 'node:path';
 
 import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
-import vercel from '@astrojs/vercel';
+import netlify from '@astrojs/netlify';
 import clerk from '@clerk/astro';
 import sitemap from '@astrojs/sitemap';
 
@@ -27,7 +27,7 @@ console.log('Environment variables loaded manually.');
 export default defineConfig({
   site: 'https://skywardhr.com',
   output: 'server',
-  adapter: vercel(),
+  adapter: netlify(),
   vite: {
     plugins: [tailwindcss()]
   },
@@ -44,4 +44,4 @@ export default defineConfig({
       }
     })
   ]
-});
+});;
