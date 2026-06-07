@@ -12,7 +12,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full space-y-2">
         {label && (
-          <label className="block text-sm font-medium text-text-secondary">
+          <label className="block text-sm font-bold text-text-primary tracking-tight">
             {label}
             {isRequired && <span className="text-danger ml-1">*</span>}
           </label>
@@ -20,16 +20,16 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           className={`
-            w-full h-12 px-4 rounded-md border bg-surface text-foreground
-            placeholder:text-text-muted focus:outline-none focus:ring-4 focus:ring-primary-200 focus:border-primary-600
-            transition-all duration-200
-            ${error ? 'border-danger ring-danger/20' : 'border-border'}
+            w-full h-[52px] px-5 rounded-xl border bg-background text-text-primary
+            placeholder:text-text-muted focus:outline-none focus:ring-4 focus:ring-primary-600/10 focus:border-primary-600
+            transition-all duration-300 shadow-sm
+            ${error ? 'border-danger ring-danger/10' : 'border-border'}
             ${className}
           `}
           {...props}
         />
-        {error && <p className="text-sm text-danger">{error}</p>}
-        {!error && helperText && <p className="text-sm text-text-muted">{helperText}</p>}
+        {error && <p className="text-sm font-bold text-danger">{error}</p>}
+        {!error && helperText && <p className="text-sm font-medium text-text-muted">{helperText}</p>}
       </div>
     );
   }
@@ -42,7 +42,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, React.TextareaHTML
     return (
       <div className="w-full space-y-2">
         {label && (
-          <label className="block text-sm font-medium text-text-secondary">
+          <label className="block text-sm font-bold text-text-primary tracking-tight">
             {label}
             {isRequired && <span className="text-danger ml-1">*</span>}
           </label>
@@ -50,15 +50,15 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, React.TextareaHTML
         <textarea
           ref={ref}
           className={`
-            w-full min-h-[120px] p-4 rounded-md border bg-surface text-foreground
-            placeholder:text-text-muted focus:outline-none focus:ring-4 focus:ring-primary-200 focus:border-primary-600
-            transition-all duration-200
-            ${error ? 'border-danger ring-danger/20' : 'border-border'}
+            w-full min-h-[140px] p-5 rounded-xl border bg-background text-text-primary
+            placeholder:text-text-muted focus:outline-none focus:ring-4 focus:ring-primary-600/10 focus:border-primary-600
+            transition-all duration-300 shadow-sm
+            ${error ? 'border-danger ring-danger/10' : 'border-border'}
             ${className}
           `}
           {...props}
         />
-        {error && <p className="text-sm text-danger">{error}</p>}
+        {error && <p className="text-sm font-bold text-danger">{error}</p>}
       </div>
     );
   }

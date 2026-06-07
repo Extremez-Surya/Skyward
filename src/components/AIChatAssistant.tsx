@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { MessageSquare, Send, X, Bot, Loader2 } from 'lucide-react';
+import { MessageSquare, Send, X, Loader2, Sparkles } from 'lucide-react';
 import { Button } from './ui/Button';
 
 export default function AIChatAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{role: 'user' | 'assistant', content: string}[]>([
-    { role: 'assistant', content: "Hello, I'm your Skyward HR Assistant. I can help answer questions about workforce services, staffing solutions, deployment timelines, and workforce management." }
+    { role: 'assistant', content: "Hello, I'm your Skyward AI Assistant. How can I help you scale your workforce today?" }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -38,28 +38,34 @@ export default function AIChatAssistant() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[60]">
+    <div className="fixed bottom-8 right-8 z-[60]">
       {isOpen ? (
-        <div className="w-80 sm:w-96 h-[500px] bg-card border border-border rounded-lg shadow-2xl flex flex-col overflow-hidden animate-fade-up">
+        <div className="w-80 sm:w-[400px] h-[600px] bg-background border border-border rounded-[32px] shadow-2xl flex flex-col overflow-hidden animate-fade-up">
           {/* Header */}
-          <div className="p-4 bg-primary-600 text-white flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <Bot size={20} />
-              <span className="font-semibold text-sm">Skyward AI Assistant</span>
+          <div className="p-6 bg-text-primary text-background flex justify-between items-center relative overflow-hidden">
+            <div className="flex items-center gap-3 relative z-10">
+              <div className="w-10 h-10 rounded-xl bg-primary-600 flex items-center justify-center">
+                <Sparkles size={20} className="text-white" />
+              </div>
+              <div>
+                <div className="font-bold text-sm tracking-tight text-white">Skyward AI</div>
+                <div className="text-[10px] font-bold text-primary-400 uppercase tracking-widest">Active Now</div>
+              </div>
             </div>
-            <button onClick={() => setIsOpen(false)} className="hover:bg-white/10 p-1 rounded-md transition-colors">
+            <button onClick={() => setIsOpen(false)} className="hover:bg-white/10 p-2 rounded-xl transition-all relative z-10 text-white">
               <X size={20} />
             </button>
+            <div className="absolute -bottom-12 -right-12 w-32 h-32 bg-primary-600/20 blur-[40px] rounded-full pointer-events-none" />
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-background/50">
+          <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-surface">
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[80%] p-3 rounded-lg text-sm ${
+                <div className={`max-w-[85%] p-4 rounded-2xl text-sm font-medium leading-relaxed ${
                   msg.role === 'user' 
-                    ? 'bg-primary-600 text-white rounded-tr-none' 
-                    : 'bg-surface border border-border text-text-primary rounded-tl-none shadow-sm'
+                    ? 'bg-primary-600 text-white rounded-tr-none shadow-premium' 
+                    : 'bg-background border border-border text-text-primary rounded-tl-none shadow-premium'
                 }`}>
                   {msg.content}
                 </div>
@@ -67,20 +73,20 @@ export default function AIChatAssistant() {
             ))}
             {loading && (
               <div className="flex justify-start">
-                <div className="bg-surface border border-border p-3 rounded-lg rounded-tl-none">
-                  <Loader2 size={16} className="animate-spin text-primary-600" />
+                <div className="bg-background border border-border p-4 rounded-2xl rounded-tl-none shadow-premium">
+                  <Loader2 size={18} className="animate-spin text-primary-600" />
                 </div>
               </div>
             )}
           </div>
 
           {/* Input */}
-          <div className="p-4 bg-surface border-t border-border">
-            <div className="flex gap-2">
+          <div className="p-6 bg-background border-t border-border">
+            <div className="flex gap-3">
               <input 
                 type="text" 
-                placeholder="Ask something..."
-                className="flex-1 bg-background border border-border rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-4 focus:ring-primary-200 focus:border-primary-600 transition-all"
+                placeholder="Ask our AI..."
+                className="flex-1 bg-surface border border-border rounded-xl px-5 py-3 text-sm font-medium text-text-primary focus:outline-none focus:ring-4 focus:ring-primary-600/10 focus:border-primary-600 transition-all"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
@@ -89,7 +95,7 @@ export default function AIChatAssistant() {
                 onClick={handleSend}
                 isLoading={loading}
                 size="icon"
-                className="h-10 w-10 min-w-[40px]"
+                className="h-12 w-12 min-w-[48px] rounded-xl"
               >
                 <Send size={18} />
               </Button>
@@ -99,9 +105,10 @@ export default function AIChatAssistant() {
       ) : (
         <button 
           onClick={() => setIsOpen(true)}
-          className="w-14 h-14 bg-primary-600 text-white rounded-md shadow-lg hover:shadow-[0_0_30px_rgba(37,99,235,0.4)] transition-all flex items-center justify-center transform hover:scale-110 group"
+          className="w-16 h-16 bg-primary-600 text-white rounded-[24px] shadow-lifted hover:shadow-glow transition-all flex items-center justify-center transform hover:scale-110 group relative"
         >
-          <MessageSquare className="group-hover:rotate-12 transition-transform" />
+          <Sparkles className="group-hover:rotate-12 transition-transform" size={28} />
+          <span className="absolute -top-1 -right-1 w-4 h-4 bg-danger border-4 border-background rounded-full"></span>
         </button>
       )}
     </div>

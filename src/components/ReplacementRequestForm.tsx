@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { UserMinus, Loader2, CheckCircle, Send } from 'lucide-react';
 import { getClientWorkforce, submitReplacementRequest } from '../lib/client';
+import { Button } from './ui/Button';
+import { Card } from './ui/Card';
 
 interface Props {
   clientId: string;
@@ -59,39 +61,42 @@ export default function ReplacementRequestForm({ clientId }: Props) {
   };
 
   return (
-    <div className="p-8 bg-surface border border-surface/50 rounded-2xl">
-      <div className="flex items-center gap-2 text-primary mb-6">
-        <UserMinus size={20} />
-        <h3 className="text-xl font-bold text-text-main">Replacement Request</h3>
+    <Card variant="standard" animate={false} className="bg-white border-border shadow-premium p-8">
+      <div className="flex items-center gap-3 text-danger mb-8">
+        <div className="w-10 h-10 rounded-xl bg-danger/10 flex items-center justify-center">
+          <UserMinus size={20} />
+        </div>
+        <h3 className="text-xl font-bold text-text-primary tracking-tight">Replacement Request</h3>
       </div>
 
       {success ? (
-        <div className="py-12 text-center space-y-4 animate-in fade-in zoom-in duration-300">
-          <div className="w-16 h-16 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mx-auto">
+        <div className="py-12 text-center space-y-4 animate-fade-up">
+          <div className="w-16 h-16 bg-success/10 text-success rounded-full flex items-center justify-center mx-auto shadow-sm">
             <CheckCircle size={32} />
           </div>
-          <h4 className="text-lg font-bold">Request Submitted!</h4>
-          <p className="text-sm text-text-muted">We will find a suitable replacement and notify you shortly.</p>
+          <h4 className="text-xl font-bold text-text-primary tracking-tight">Request Submitted</h4>
+          <p className="text-sm text-text-secondary font-medium">We will find a suitable replacement and notify you shortly.</p>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <label className="text-xs font-semibold uppercase tracking-wider text-text-muted">Select Worker</label>
+            <label className="block text-sm font-bold text-text-primary tracking-tight">Select Worker</label>
             {fetchingWorkforce ? (
-                <div className="flex items-center gap-2 text-text-muted text-sm px-4 py-3 bg-background border border-surface/50 rounded-xl">
-                    <Loader2 size={16} className="animate-spin" /> Loading workforce...
+                <div className="flex items-center gap-2 text-text-muted text-sm px-5 py-3 bg-surface border border-border rounded-xl">
+                    <Loader2 size={16} className="animate-spin text-primary-600" /> 
+                    <span className="font-medium">Loading workforce data...</span>
                 </div>
             ) : (
                 <select 
                     required
-                    className="w-full bg-background border border-surface/50 rounded-xl px-4 py-3 text-sm focus:outline-none"
+                    className="w-full h-[52px] px-5 rounded-xl border border-border bg-white text-text-primary font-medium focus:outline-none focus:ring-4 focus:ring-primary-600/10 focus:border-primary-600 transition-all shadow-sm"
                     value={formData.deployment_id}
                     onChange={(e) => setFormData({...formData, deployment_id: e.target.value})}
                 >
                     <option value="">Choose a worker to replace</option>
                     {workforce.map((item) => (
                         <option key={item.id} value={item.id}>
-                            {item.candidates.full_name} ({item.role})
+                            {item.candidates.full_name} — {item.role}
                         </option>
                     ))}
                 </select>
@@ -99,21 +104,21 @@ export default function ReplacementRequestForm({ clientId }: Props) {
           </div>
 
           <div className="space-y-2">
-            <label className="text-xs font-semibold uppercase tracking-wider text-text-muted">Reason for Replacement</label>
+            <label className="block text-sm font-bold text-text-primary tracking-tight">Reason for Replacement</label>
             <textarea 
               required
-              className="w-full bg-background border border-surface/50 rounded-xl px-4 py-3 text-sm focus:outline-none min-h-[100px]"
-              placeholder="Please explain why a replacement is needed (e.g. poor performance, frequent absence, etc.)"
+              className="w-full min-h-[120px] px-5 py-4 rounded-xl border border-border bg-white text-text-primary font-medium placeholder:text-text-muted focus:outline-none focus:ring-4 focus:ring-primary-600/10 focus:border-primary-600 transition-all shadow-sm resize-none"
+              placeholder="Explain the requirement (e.g. performance issues, frequent absence)"
               value={formData.reason}
               onChange={(e) => setFormData({...formData, reason: e.target.value})}
             />
           </div>
 
-          <div className="space-y-2">
-            <label className="text-xs font-semibold uppercase tracking-wider text-text-muted">Priority</label>
+          <div className="space-y-3">
+            <label className="block text-sm font-bold text-text-primary tracking-tight">Priority Level</label>
             <div className="flex gap-4">
                 {['Normal', 'Urgent'].map((p) => (
-                    <label key={p} className="flex-1 cursor-pointer">
+                    <label key={p} className="flex-1 cursor-pointer group">
                         <input 
                             type="radio" 
                             name="priority" 
@@ -121,10 +126,10 @@ export default function ReplacementRequestForm({ clientId }: Props) {
                             checked={formData.priority === p}
                             onChange={() => setFormData({...formData, priority: p})}
                         />
-                        <div className={`text-center py-3 rounded-xl border text-sm font-semibold transition-all ${
+                        <div className={`text-center py-3 rounded-xl border text-sm font-bold transition-all shadow-sm ${
                             formData.priority === p 
-                                ? 'bg-primary/10 border-primary text-primary' 
-                                : 'bg-background border-surface/50 text-text-muted hover:border-surface-hover'
+                                ? 'bg-primary-600 border-primary-600 text-white shadow-lifted' 
+                                : 'bg-white border-border text-text-secondary hover:border-primary-100 hover:bg-primary-50'
                         }`}>
                             {p}
                         </div>
@@ -134,16 +139,18 @@ export default function ReplacementRequestForm({ clientId }: Props) {
           </div>
 
           <div className="pt-4">
-            <button 
+            <Button 
               type="submit"
-              disabled={loading || !formData.deployment_id}
-              className="w-full py-4 bg-primary text-white rounded-xl font-bold hover:bg-primary-hover transition-all flex items-center justify-center gap-2 disabled:opacity-50 shadow-lg shadow-primary/20"
+              isLoading={loading}
+              disabled={!formData.deployment_id}
+              className="w-full rounded-xl"
+              rightIcon={Send}
             >
-              {loading ? <Loader2 size={20} className="animate-spin" /> : <><Send size={18} /> Submit Request</>}
-            </button>
+              Submit Replacement Request
+            </Button>
           </div>
         </form>
       )}
-    </div>
+    </Card>
   );
 }

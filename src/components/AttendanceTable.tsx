@@ -81,7 +81,8 @@ export default function AttendanceTable({ attendance }: Props) {
             </div>
 
             <Card variant="standard" animate={false} className="p-0 border-border overflow-hidden">
-                <div className="overflow-x-auto">
+                {/* Desktop Table View */}
+                <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-left">
                         <thead>
                             <tr className="border-b border-border bg-surface">
@@ -121,6 +122,49 @@ export default function AttendanceTable({ attendance }: Props) {
                             )}
                         </tbody>
                     </table>
+                </div>
+
+                {/* Mobile Card View */}
+                <div className="md:hidden divide-y divide-border">
+                    {filteredAttendance.length > 0 ? filteredAttendance.map((record) => (
+                        <div key={record.id} className="p-5 flex flex-col gap-4 active:bg-surface transition-colors">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <div className="font-bold text-text-primary text-lg leading-tight">
+                                        {record.deployments.candidates.full_name}
+                                    </div>
+                                    <div className="text-sm text-text-secondary font-medium">
+                                        {record.deployments.role}
+                                    </div>
+                                </div>
+                                <Badge variant={
+                                    record.status === 'present' ? 'success' : 
+                                    record.status === 'absent' ? 'danger' : 'warning'
+                                }>
+                                    {record.status.charAt(0).toUpperCase() + record.status.slice(1)}
+                                </Badge>
+                            </div>
+                            
+                            <div className="grid grid-cols-2 gap-4 pt-2">
+                                <div className="p-3 rounded-xl bg-surface border border-border/50">
+                                    <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">Check In</div>
+                                    <div className="text-sm font-semibold text-text-primary">
+                                        {record.check_in ? new Date(record.check_in).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : '-'}
+                                    </div>
+                                </div>
+                                <div className="p-3 rounded-xl bg-surface border border-border/50">
+                                    <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">Check Out</div>
+                                    <div className="text-sm font-semibold text-text-primary">
+                                        {record.check_out ? new Date(record.check_out).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : '-'}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )) : (
+                        <div className="px-6 py-12 text-center text-text-muted">
+                            No attendance records found.
+                        </div>
+                    )}
                 </div>
             </Card>
         </div>

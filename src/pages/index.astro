@@ -2,22 +2,22 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
-import Stats from '../components/Stats';
+import TrustedCompanies from '../components/TrustedCompanies';
+import WorkforceChallenges from '../components/WorkforceChallenges';
+import Solutions from '../components/Solutions';
 import ServicesOverview from '../components/ServicesOverview';
-import Industries from '../components/Industries';
-import WhyChooseUs from '../components/WhyChooseUs';
-import ProcessTimeline from '../components/ProcessTimeline';
+import AnalyticsSection from '../components/AnalyticsSection';
 import Testimonials from '../components/Testimonials';
 import CTA from '../components/CTA';
 import Footer from '../components/Footer';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// FAQ placeholder component (will be updated later)
+import FAQAccordion from '../components/FAQAccordion';
 ---
 
 <Layout 
-	title="Skyward HR | Leading Manpower Supply & Staffing Company in India"
-	description="Skyward HR provides workforce management, staffing solutions, warehouse staffing, logistics staffing and contract manpower services across India."
+	title="Skyward HR | Professional Workforce Solutions for Serious Businesses"
+	description="Skyward HR provides premium enterprise-grade workforce management, staffing solutions, and contract manpower services across India."
 >
 	<script type="application/ld+json" slot="head">
 		{
@@ -40,12 +40,13 @@ import Footer from '../components/Footer';
 	<Header client:load />
 	<main>
 		<Hero client:load />
-		<Stats client:visible />
+		<TrustedCompanies client:visible />
+		<WorkforceChallenges client:visible />
+		<Solutions client:visible />
 		<ServicesOverview client:visible />
-		<Industries client:visible />
-		<WhyChooseUs client:visible />
-		<ProcessTimeline client:visible />
+		<AnalyticsSection client:visible />
 		<Testimonials client:visible />
+		<FAQAccordion client:visible />
 		<CTA client:visible />
 	</main>
 	<Footer />

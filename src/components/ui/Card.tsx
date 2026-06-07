@@ -14,12 +14,12 @@ export const Card: React.FC<CardProps> = ({
   className = '',
   animate = true
 }) => {
-  const baseStyles = "bg-card border border-border overflow-hidden";
+  const baseStyles = "bg-card border border-border overflow-hidden transition-all duration-300";
   
   const variants = {
-    standard: "rounded-lg p-6 shadow-md",
-    feature: "rounded-xl p-8 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1",
-    metric: "rounded-lg p-6 bg-gradient-to-br from-card to-surface shadow-sm"
+    standard: "rounded-2xl p-6 shadow-premium hover:shadow-lifted",
+    feature: "rounded-2xl p-8 shadow-premium hover:shadow-lifted hover:-translate-y-1",
+    metric: "rounded-2xl p-6 bg-gradient-to-br from-card to-surface shadow-premium"
   };
 
   const combinedClasses = `${baseStyles} ${variants[variant]} ${className}`;
@@ -36,8 +36,8 @@ export const Card: React.FC<CardProps> = ({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       className={combinedClasses}
     >
       {children}
@@ -46,15 +46,15 @@ export const Card: React.FC<CardProps> = ({
 };
 
 export const CardHeader: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
-  <div className={`mb-4 ${className}`}>{children}</div>
+  <div className={`mb-6 ${className}`}>{children}</div>
 );
 
 export const CardTitle: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
-  <h3 className={`text-xl font-semibold text-foreground ${className}`}>{children}</h3>
+  <h3 className={`text-2xl font-semibold text-text-primary tracking-tight ${className}`}>{children}</h3>
 );
 
 export const CardDescription: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
-  <p className={`text-text-secondary text-sm ${className}`}>{children}</p>
+  <p className={`text-text-secondary text-base leading-relaxed ${className}`}>{children}</p>
 );
 
 export const CardContent: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (

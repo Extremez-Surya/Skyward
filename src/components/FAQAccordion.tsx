@@ -1,101 +1,98 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-interface FAQItem {
-  question: string;
-  answer: string;
-}
-
-interface FAQCategory {
-  title: string;
-  items: FAQItem[];
-}
-
-const faqs: FAQCategory[] = [
+const faqs = [
   {
-    title: "Workforce & Staffing",
-    items: [
-      {
-        question: "How quickly can workforce be deployed?",
-        answer: "Deployment timelines vary based on workforce requirements, location, and candidate availability."
-      },
-      {
-        question: "Do you provide replacement support?",
-        answer: "Yes. We provide workforce replacement assistance when required."
-      },
-      {
-        question: "What industries do you serve?",
-        answer: "We serve logistics, warehousing, retail, e-commerce, corporate, and other workforce-intensive industries."
-      },
-      {
-        question: "Do you verify candidates?",
-        answer: "Yes. Candidate screening and document verification are part of our staffing process."
-      }
-    ]
+    question: "How quickly can Skyward deploy workforce at scale?",
+    answer: "Our enterprise deployment engine can mobilize up to 500+ personnel within 72 hours for standard roles like logistics and warehousing, thanks to our pre-vetted talent pool."
   },
   {
-    title: "For Candidates",
-    items: [
-      {
-        question: "How can I register as a candidate?",
-        answer: "You can register by clicking the 'Candidate Login/Sign Up' button. Fill in your basic details, upload the required documents (Aadhaar, PAN, etc.), and our team will contact you for the next steps."
-      },
-      {
-        question: "Is there any registration fee?",
-        answer: "No, Skyward HR Service does not charge any registration or processing fee from candidates. Be wary of any individuals asking for money in our name."
-      }
-    ]
+    question: "How do you handle compliance and labor laws?",
+    answer: "We provide 100% statutory compliance. Our platform automates the management of ESI, PF, PT, and all labor law requirements, providing you with monthly compliance reports."
   },
   {
-    title: "General Questions",
-    items: [
-      {
-        question: "What is Skyward HR Service?",
-        answer: "Skyward HR Service is a workforce management and staffing company focused on helping businesses meet their manpower requirements efficiently. We provide recruitment support, workforce deployment, attendance management, and replacement services."
-      }
-    ]
+    question: "Can we track worker performance and attendance in real-time?",
+    answer: "Yes. Our client dashboard provides real-time visibility into attendance via geo-fenced mobile check-ins and performance metrics tailored to your KPIs."
+  },
+  {
+    question: "What is your replacement policy for deployed staff?",
+    answer: "We maintain a 'Zero Downtime' policy. If a staff member is unavailable, our system automatically triggers a replacement from our standby pool to ensure your operations never stop."
+  },
+  {
+    question: "Do you serve businesses outside of Delhi NCR?",
+    answer: "Yes, Skyward HR has a pan-India presence, serving major industrial and commercial hubs across 35+ cities including Bangalore, Mumbai, Pune, and Hyderabad."
   }
 ];
 
 export default function FAQAccordion() {
-  const [openIndex, setOpenIndex] = useState<string | null>(null);
-
-  const toggle = (id: string) => {
-    setOpenIndex(openIndex === id ? null : id);
-  };
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <div className="space-y-12">
-      {faqs.map((category, catIdx) => (
-        <div key={catIdx} className="space-y-4">
-          <h2 className="text-2xl font-bold text-text-main border-l-4 border-primary pl-4">{category.title}</h2>
-          <div className="space-y-3">
-            {category.items.map((item, itemIdx) => {
-              const id = `${catIdx}-${itemIdx}`;
-              const isOpen = openIndex === id;
+    <section className="section-padding bg-background">
+      <div className="container-custom">
+        <div className="grid lg:grid-cols-12 gap-16">
+          <div className="lg:col-span-5">
+            <h2 className="text-text-primary mb-6">Frequently asked <span className="text-primary-600">questions.</span></h2>
+            <p className="text-xl text-text-secondary leading-relaxed mb-10">
+              Everything you need to know about our workforce solutions and enterprise platform.
+            </p>
+
+            <div className="p-8 bg-background border border-border rounded-2xl shadow-sm relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-primary-600/5 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110" />
+              <h4 className="text-lg font-bold text-text-primary mb-2">Still have questions?</h4>
+              <p className="text-text-secondary text-sm mb-6">
+                Can't find the answer you're looking for? Please chat to our friendly team.
+              </p>
+              <button 
+                onClick={() => window.location.href = '/contact'}
+                className="inline-flex items-center text-primary-600 font-bold hover:text-primary-700 transition-colors gap-2"
+              >
+                Get in touch
+                <ChevronDown size={16} className="-rotate-90" />
+              </button>
+            </div>
+          </div>
+          
+          <div className="lg:col-span-7 space-y-4">
+            {faqs.map((faq, index) => {
+              const isOpen = openIndex === index;
               return (
                 <div 
-                  key={id} 
-                  className={`border border-surface-hover rounded-xl overflow-hidden transition-all ${isOpen ? 'bg-surface/50' : 'bg-surface'}`}
+                  key={index} 
+                  className={`border border-border rounded-2xl overflow-hidden transition-all duration-300 ${isOpen ? 'bg-card shadow-lifted' : 'bg-transparent'}`}
                 >
                   <button 
-                    onClick={() => toggle(id)}
-                    className="w-full px-6 py-5 flex items-center justify-between text-left gap-4"
+                    onClick={() => setOpenIndex(isOpen ? null : index)}
+                    className="w-full px-8 py-6 flex items-center justify-between text-left gap-4 group"
                   >
-                    <span className="font-medium text-text-main md:text-lg">{item.question}</span>
-                    {isOpen ? <ChevronUp className="text-primary shrink-0" /> : <ChevronDown className="text-text-muted shrink-0" />}
-                  </button>
-                  {isOpen && (
-                    <div className="px-6 pb-6 text-text-muted leading-relaxed animate-in fade-in slide-in-from-top-2 duration-300">
-                      {item.answer}
+                    <span className={`text-lg font-bold transition-colors ${isOpen ? 'text-primary-600' : 'text-text-primary group-hover:text-primary-600'}`}>
+                      {faq.question}
+                    </span>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${isOpen ? 'bg-primary-600 text-white rotate-180' : 'bg-surface text-text-muted'}`}>
+                      <ChevronDown size={20} />
                     </div>
-                  )}
+                  </button>
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div 
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                      >
+                        <div className="px-8 pb-8 text-text-secondary leading-relaxed text-lg">
+                          {faq.answer}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               );
             })}
           </div>
         </div>
-      ))}
-    </div>
+      </div>
+    </section>
   );
 }

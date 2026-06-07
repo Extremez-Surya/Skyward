@@ -6,8 +6,21 @@ if (!userId) return Astro.redirect('/sign-in');
 const profile = await getUserProfile(userId);
 if (!profile) return Astro.redirect('/dashboard');
 ---
-<DashboardLayout title="Workforce" role="client">
-    <div class="p-12 bg-surface border border-surface/50 rounded-2xl text-center">
-        <p class="text-text-muted">This module is under development.</p>
+<DashboardLayout title="My Workforce">
+  <div class="mb-10">
+    <h1 class="text-3xl font-bold text-text-primary tracking-tight">My Workforce</h1>
+    <p class="text-text-secondary font-medium">Manage and view all personnel deployed at your locations.</p>
+  </div>
+
+  <div class="p-20 bg-card border border-border rounded-[32px] shadow-premium text-center">
+    <div class="w-20 h-20 bg-primary-50 rounded-[24px] flex items-center justify-center text-primary-600 mx-auto mb-8">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
     </div>
+    <h2 class="text-2xl font-bold text-text-primary mb-4">Module Under Development</h2>
+    <p class="text-text-secondary max-w-md mx-auto leading-relaxed font-medium">
+      We are currently enhancing the workforce management module to provide deeper insights into staff performance and documentation.
+    </p>
+  </div>
 </DashboardLayout>

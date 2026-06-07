@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Sparkles, Loader2, FileText, Send } from 'lucide-react';
+import { Button } from '../ui/Button';
 
 interface AIToolsProps {
   role: 'admin' | 'manager' | 'client' | 'candidate';
@@ -55,29 +56,32 @@ export default function AITools({ role }: AIToolsProps) {
     <div className={`grid grid-cols-1 ${showJD && showAnalyzer ? 'lg:grid-cols-2' : ''} gap-8`}>
       {/* JD Generator */}
       {showJD && (
-        <div className="p-6 bg-surface border border-surface/50 rounded-2xl space-y-4">
-          <div className="flex items-center gap-2 text-primary">
-            <Sparkles size={20} />
-            <h3 className="font-bold">AI JD Generator</h3>
+        <div className="p-8 bg-card border border-border rounded-[32px] shadow-premium space-y-6">
+          <div className="flex items-center gap-3 text-primary-600">
+            <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center">
+              <Sparkles size={20} />
+            </div>
+            <h3 className="text-xl font-bold text-text-primary tracking-tight">AI Job Description</h3>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <input 
               type="text" 
-              placeholder="Enter role name (e.g. Warehouse Supervisor)"
-              className="flex-1 bg-background border border-surface/50 rounded-xl px-4 py-2 text-sm focus:outline-none"
+              placeholder="e.g. Warehouse Supervisor"
+              className="flex-1 bg-surface border border-border rounded-xl px-5 py-3 text-sm font-medium focus:outline-none focus:ring-4 focus:ring-primary-600/10 transition-all"
               value={jdRole}
               onChange={(e) => setJdRole(e.target.value)}
             />
-            <button 
+            <Button 
               onClick={generateJD}
-              disabled={!!loading}
-              className="px-4 py-2 bg-primary text-white rounded-xl text-sm font-medium hover:bg-primary-hover disabled:opacity-50"
+              isLoading={loading === 'jd'}
+              size="md"
+              className="px-6 rounded-xl"
             >
-              {loading === 'jd' ? <Loader2 size={18} className="animate-spin" /> : 'Generate'}
-            </button>
+              Generate
+            </Button>
           </div>
           {jdOutput && (
-            <div className="mt-4 p-4 bg-background border border-surface/50 rounded-xl max-h-60 overflow-y-auto whitespace-pre-wrap text-xs text-text-muted">
+            <div className="mt-6 p-6 bg-surface border border-border rounded-2xl max-h-80 overflow-y-auto whitespace-pre-wrap text-sm text-text-secondary leading-relaxed font-medium">
               {jdOutput}
             </div>
           )}
@@ -86,30 +90,41 @@ export default function AITools({ role }: AIToolsProps) {
 
       {/* Requirement Analyzer */}
       {showAnalyzer && (
-        <div className="p-6 bg-surface border border-surface/50 rounded-2xl space-y-4">
-          <div className="flex items-center gap-2 text-primary">
-            <Sparkles size={20} />
-            <h3 className="font-bold">AI Requirement Analyzer</h3>
+        <div className="p-8 bg-card border border-border rounded-[32px] shadow-premium space-y-6">
+          <div className="flex items-center gap-3 text-primary-600">
+            <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center">
+              <Sparkles size={20} />
+            </div>
+            <h3 className="text-xl font-bold text-text-primary tracking-tight">Requirement Analyzer</h3>
           </div>
           <textarea 
-            placeholder="Paste client requirement text here..."
-            className="w-full h-24 bg-background border border-surface/50 rounded-xl px-4 py-3 text-sm focus:outline-none resize-none"
+            placeholder="Paste raw client requirement text here..."
+            className="w-full h-32 bg-surface border border-border rounded-2xl px-5 py-4 text-sm font-medium focus:outline-none focus:ring-4 focus:ring-primary-600/10 transition-all resize-none"
             value={reqText}
             onChange={(e) => setReqText(e.target.value)}
           />
-          <button 
+          <Button 
             onClick={analyzeRequirement}
-            disabled={!!loading}
-            className="w-full py-2 bg-primary text-white rounded-xl text-sm font-medium hover:bg-primary-hover disabled:opacity-50 flex items-center justify-center gap-2"
+            isLoading={loading === 'req'}
+            className="w-full rounded-xl"
+            rightIcon={Send}
           >
-            {loading === 'req' ? <Loader2 size={18} className="animate-spin" /> : <><Send size={16} /> Analyze</>}
-          </button>
+            Analyze Requirement
+          </Button>
           {reqAnalysis && (
-            <div className="mt-4 p-4 bg-background border border-surface/50 rounded-xl text-xs space-y-2">
-              <p><strong>Workforce Type:</strong> {reqAnalysis.workforce_type}</p>
-              <p><strong>Timeline:</strong> {reqAnalysis.estimated_hiring_timeline}</p>
-              <p><strong>Recommendation:</strong> {reqAnalysis.staffing_recommendation}</p>
-              <p><strong>Key Skills:</strong> {reqAnalysis.key_skills_needed}</p>
+            <div className="mt-6 grid grid-cols-2 gap-4">
+              <div className="p-4 bg-surface border border-border rounded-xl">
+                <div className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-1">Workforce Type</div>
+                <div className="text-sm font-bold text-text-primary">{reqAnalysis.workforce_type}</div>
+              </div>
+              <div className="p-4 bg-surface border border-border rounded-xl">
+                <div className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-1">Timeline</div>
+                <div className="text-sm font-bold text-text-primary">{reqAnalysis.estimated_hiring_timeline}</div>
+              </div>
+              <div className="p-4 bg-surface border border-border rounded-xl col-span-2">
+                <div className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-1">Recommendation</div>
+                <div className="text-sm font-medium text-text-secondary leading-relaxed">{reqAnalysis.staffing_recommendation}</div>
+              </div>
             </div>
           )}
         </div>

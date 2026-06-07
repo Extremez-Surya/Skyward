@@ -20,7 +20,7 @@
 			"dest": "_render"
 		},
 		{
-			"src": "^/about/?$",
+			"src": "^/about-us/?$",
 			"dest": "_render"
 		},
 		{
@@ -29,6 +29,10 @@
 		},
 		{
 			"src": "^/admin/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/analytics/?$",
 			"dest": "_render"
 		},
 		{
@@ -192,6 +196,10 @@
 			"dest": "_render"
 		},
 		{
+			"src": "^/careers/?$",
+			"dest": "_render"
+		},
+		{
 			"src": "^/client/attendance/?$",
 			"dest": "_render"
 		},
@@ -209,6 +217,10 @@
 		},
 		{
 			"src": "^/client/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/compliance/?$",
 			"dest": "_render"
 		},
 		{
@@ -353,6 +365,10 @@
 		},
 		{
 			"src": "^/sign-up(?:/(.*?))?/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/support/?$",
 			"dest": "_render"
 		},
 		{

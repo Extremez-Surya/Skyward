@@ -1,35 +1,37 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Quote } from 'lucide-react';
+import { Quote, Star } from 'lucide-react';
+import { Card } from './ui/Card';
 
 const testimonials = [
   {
-    quote: "Skyward HR completely transformed how we handle warehouse staffing. Their platform makes deployment and tracking seamless.",
+    quote: "Skyward HR completely transformed how we handle warehouse staffing. Their platform makes deployment and tracking seamless across multiple fulfillment centers.",
     author: "Rajesh Kumar",
-    role: "Operations Manager, FastCart Logistics",
+    role: "Director of Operations, FastCart Logistics",
+    avatar: "RK"
   },
   {
-    quote: "The replacement support is a game-changer. We never face downtime anymore because they always have backup staff ready.",
+    quote: "The reliability of their workforce is unmatched. We never face downtime during peak sales because they always have backup staff ready and trained.",
     author: "Priya Sharma",
-    role: "HR Head, Metro Retail",
+    role: "Head of HR, Metro Retail Group",
+    avatar: "PS"
   },
   {
-    quote: "Professional, transparent, and incredibly fast. They provided 50 delivery executives in just 3 days during our peak season.",
+    quote: "Professional, transparent, and incredibly fast. They provided 500+ delivery executives in just 3 days during our national scaling phase.",
     author: "Amit Patel",
-    role: "City Head, QuickDelivery",
+    role: "Chief Operating Officer, QuickDelivery",
+    avatar: "AP"
   }
 ];
 
 export default function Testimonials() {
   return (
-    <section className="py-24 bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-            What Our Clients Say
-          </h2>
-          <p className="text-lg text-text-muted">
-            Hear from industry leaders who have scaled their operations with our workforce solutions.
+    <section className="section-padding bg-background overflow-hidden">
+      <div className="container-custom">
+        <div className="text-center max-w-3xl mx-auto mb-20">
+          <h2 className="text-text-primary mb-6">Trusted by industry <span className="text-primary-600">leaders.</span></h2>
+          <p className="text-xl text-text-secondary leading-relaxed">
+            Hear from the operational heads of India's largest logistics, retail, and e-commerce companies.
           </p>
         </div>
 
@@ -40,17 +42,34 @@ export default function Testimonials() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="p-8 rounded-2xl bg-surface border border-surface-hover relative"
+              transition={{ delay: index * 0.1 }}
             >
-              <Quote size={40} className="text-primary/20 absolute top-6 right-6" />
-              <p className="text-text-main text-lg mb-8 relative z-10 leading-relaxed">
-                "{testimonial.quote}"
-              </p>
-              <div>
-                <h4 className="font-semibold text-white">{testimonial.author}</h4>
-                <p className="text-sm text-text-muted">{testimonial.role}</p>
-              </div>
+              <Card 
+                variant="feature"
+                className="h-full bg-card border-border flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex gap-1 mb-6">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star key={i} size={16} className="fill-warning text-warning" />
+                    ))}
+                  </div>
+                  <Quote size={40} className="text-primary-600/20 mb-6" />
+                  <p className="text-lg text-text-primary mb-10 leading-relaxed font-medium italic">
+                    "{testimonial.quote}"
+                  </p>
+                </div>
+                
+                <div className="flex items-center gap-4 pt-6 border-t border-border">
+                  <div className="w-12 h-12 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold">
+                    {testimonial.avatar}
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-text-primary">{testimonial.author}</h4>
+                    <p className="text-sm text-text-secondary">{testimonial.role}</p>
+                  </div>
+                </div>
+              </Card>
             </motion.div>
           ))}
         </div>

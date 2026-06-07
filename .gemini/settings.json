@@ -2,6 +2,14 @@
   "mcpServers": {
     "Astro docs": {
       "httpUrl": "https://mcp.docs.astro.build/mcp"
+    },
+    "agentation": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "agentation-mcp",
+        "server"
+      ]
     }
   }
 }

@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import AIChatAssistant from '../components/AIChatAssistant';
+import { Agentation } from 'agentation';
 
 interface Props {
 	title?: string;
@@ -17,10 +18,12 @@ const {
 	canonicalURL = Astro.url.href,
 	type = "website"
 } = Astro.props;
+
+const isDev = import.meta.env.DEV;
 ---
 
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -48,11 +51,32 @@ const {
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+		
+		<script is:inline>
+			const theme = (() => {
+				if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+					return localStorage.getItem('theme');
+				}
+				if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+					return 'dark';
+				}
+				return 'light';
+			})();
+		
+			if (theme === 'light') {
+				document.documentElement.classList.remove('dark');
+			} else {
+				document.documentElement.classList.add('dark');
+			}
+			window.localStorage.setItem('theme', theme);
+		</script>
+
 		<slot name="head" />
 	</head>
 	<body class="min-h-screen bg-background text-foreground flex flex-col">
 		<slot />
 		<AIChatAssistant client:load />
+		{isDev && <Agentation client:only="react" />}
 	</body>
 </html>

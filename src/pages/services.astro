@@ -6,9 +6,12 @@ import ServicesOverview from '../components/ServicesOverview';
 import CTA from '../components/CTA';
 ---
 
-<Layout title="Services | Skyward HR Service">
+<Layout 
+  title="Our Services | Skyward HR Service"
+  description="Explore our range of workforce solutions including logistics staffing, warehouse operations, retail support, and facility management."
+>
 	<Header client:load />
-	<main class="pt-20 flex-grow">
+	<main class="pt-24 flex-grow bg-background">
 		<ServicesOverview client:load />
 	</main>
 	<CTA client:visible />

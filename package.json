@@ -30,5 +30,8 @@
     "svix": "^1.95.1",
     "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "agentation": "^3.0.2"
   }
 }

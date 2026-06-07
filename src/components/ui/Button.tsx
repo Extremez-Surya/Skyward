@@ -22,20 +22,20 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     className = '',
     ...props 
   }, ref) => {
-    const baseStyles = "inline-flex items-center justify-center font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95";
+    const baseStyles = "inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98] cursor-pointer";
     
     const variants = {
-      primary: "bg-primary-600 text-white hover:bg-primary-700 shadow-sm",
-      secondary: "bg-transparent border border-primary-600 text-primary-600 hover:bg-primary-50 shadow-sm",
-      outline: "bg-transparent border-2 border-primary-600 text-primary-600 hover:bg-primary-50",
-      ghost: "bg-transparent text-primary-600 hover:bg-primary-50",
+      primary: "bg-primary-600 text-white hover:opacity-90 shadow-[0_1px_2px_rgba(0,0,0,0.05)] relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent before:-translate-x-full hover:before:animate-[shimmer_1.5s_infinite] isolate",
+      secondary: "bg-background border border-border text-text-primary hover:bg-surface hover:border-text-primary/20",
+      outline: "bg-transparent border border-border text-text-primary hover:bg-surface",
+      ghost: "bg-transparent text-text-primary hover:bg-surface",
     };
 
     const sizes = {
-      sm: "h-9 px-4 rounded-sm text-sm",
-      md: "h-12 px-8 rounded-md text-base",
-      lg: "h-14 px-10 rounded-lg text-lg",
-      icon: "h-12 w-12 rounded-md",
+      sm: "h-9 px-3 rounded-xl text-sm",
+      md: "h-11 px-6 rounded-xl text-sm",
+      lg: "h-14 px-8 rounded-2xl text-base",
+      icon: "h-11 w-11 rounded-xl",
     };
 
     const combinedClasses = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`;
@@ -43,7 +43,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <motion.button
         ref={ref}
-        whileHover={{ scale: 1.02 }}
+        whileHover={{ y: -2 }}
         whileTap={{ scale: 0.98 }}
         className={combinedClasses}
         disabled={isLoading || props.disabled}
@@ -54,7 +54,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ) : LeftIcon && (
           <LeftIcon size={size === 'sm' ? 16 : 20} className="mr-2" />
         )}
-        {children}
+        <span className="relative z-10">{children}</span>
         {!isLoading && RightIcon && (
           <RightIcon size={size === 'sm' ? 16 : 20} className="ml-2" />
         )}

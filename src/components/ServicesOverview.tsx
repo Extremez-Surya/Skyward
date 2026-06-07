@@ -1,89 +1,110 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Truck, Package, ShoppingCart, Briefcase, Sparkles, MapPin, Users, ArrowRight } from 'lucide-react';
-import { Card } from './ui/Card';
+import { Truck, Package, ShoppingCart, Briefcase, Sparkles, MapPin, ArrowRight } from 'lucide-react';
+import { Card, CardTitle, CardDescription } from './ui/Card';
 
 const services = [
   {
     title: 'Logistics Staffing',
-    description: 'Delivery Executives, Riders, Route Support Staff.',
+    description: 'Expert delivery executives, riders, and route support staff optimized for rapid fulfillment.',
     icon: Truck,
     slug: 'logistics'
   },
   {
-    title: 'Warehouse Staffing',
-    description: 'Pickers, Packers, Loaders, Inventory Assistants.',
+    title: 'Warehouse Operations',
+    description: 'Specialized pickers, packers, loaders, and inventory experts for seamless supply chain management.',
     icon: Package,
     slug: 'warehouse'
   },
   {
-    title: 'Retail Staffing',
-    description: 'Store Helpers, Billing Staff, Sales Support Staff.',
+    title: 'Retail Solutions',
+    description: 'Professional store helpers, billing staff, and sales support teams to elevate your customer experience.',
     icon: ShoppingCart,
     slug: 'retail'
   },
   {
-    title: 'Office Support',
-    description: 'Data Entry Operators, Reception Support, Office Boys.',
+    title: 'Enterprise Support',
+    description: 'Data entry operators, receptionists, and administrative support for high-growth corporate environments.',
     icon: Briefcase,
     slug: 'office-support'
   },
   {
-    title: 'Housekeeping',
-    description: 'Cleaning Staff, Pantry Helpers, Housekeeping Personnel.',
+    title: 'Facility Management',
+    description: 'Trained housekeeping personnel and pantry helpers to maintain world-class facility standards.',
     icon: Sparkles,
     slug: 'housekeeping'
   },
   {
     title: 'Field Operations',
-    description: 'Survey Staff, Promoters, Field Executives.',
+    description: 'Scalable survey staff, promoters, and field executives for pan-India market research and sales.',
     icon: MapPin,
     slug: 'field-operations'
-  },
-  {
-    title: 'Supervisory Staff',
-    description: 'Team Leaders, Shift Supervisors, Coordinators.',
-    icon: Users,
-    slug: 'supervisory'
   },
 ];
 
 export default function ServicesOverview() {
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
-      <div className="container-custom relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-text-primary mb-6 tracking-tight">
-            Workforce Solutions Built For Every Business
+    <section className="section-padding bg-background overflow-hidden">
+      <div className="container-custom">
+        <div className="max-w-4xl mx-auto mb-24 text-center">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary-600/10 text-primary-600 text-sm font-bold mb-6">
+            <Sparkles size={16} className="mr-2" />
+            Our Workforce Model
+          </div>
+          <h2 className="text-text-primary mb-8 leading-[1.1]">
+            Workforce solutions <br />
+            <span className="text-primary-600">tailored for scale.</span>
           </h2>
-          <p className="text-lg text-text-secondary">
-            Whether you need temporary staff, contract workers, warehouse teams, retail support, or logistics manpower, Skyward HR delivers workforce solutions tailored to your business needs.
+          <p className="text-xl text-text-secondary leading-relaxed mb-10 font-medium max-w-2xl mx-auto">
+            We've developed a high-density recruitment and deployment model that bridges the gap between massive operational demands and reliable human capital.
           </p>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
+            {[
+              { label: 'Onboarding Speed', value: '24-48hrs' },
+              { label: 'Deployment Scale', value: 'Pan-India' },
+              { label: 'Compliance Rate', value: '100%' },
+              { label: 'Retention Focus', value: '92%' }
+            ].map((stat) => (
+              <div key={stat.label} className="p-4 rounded-2xl bg-surface border border-border">
+                <div className="text-2xl font-bold text-primary-600 mb-1">{stat.value}</div>
+                <div className="text-sm text-text-secondary font-semibold">{stat.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
-              <a href={`/services/${service.slug}`} key={service.title} className="group">
+              <motion.a 
+                href={`/services/${service.slug}`} 
+                key={service.title} 
+                className="group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05 }}
+              >
                 <Card 
                   variant="feature"
-                  className="h-full flex flex-col items-start"
+                  className="h-full bg-card flex flex-col items-start border-transparent hover:border-primary-100"
                 >
-                  <div className="w-12 h-12 rounded-md bg-primary-600/10 flex items-center justify-center mb-6 group-hover:bg-primary-600 group-hover:text-white text-primary-600 transition-colors">
-                    <Icon size={24} />
+                  <div className="w-14 h-14 rounded-2xl bg-primary-600/10 flex items-center justify-center mb-8 group-hover:bg-primary-600 group-hover:text-white text-primary-600 transition-all duration-300">
+                    <Icon size={28} />
                   </div>
-                  <h3 className="text-xl font-semibold text-text-primary mb-3">
+                  <CardTitle className="mb-4">
                     {service.title}
-                  </h3>
-                  <p className="text-text-secondary text-sm leading-relaxed flex-grow">
+                  </CardTitle>
+                  <CardDescription className="flex-grow mb-8">
                     {service.description}
-                  </p>
-                  <div className="mt-6 flex items-center text-sm font-medium text-primary-600 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all">
-                    Learn more <ArrowRight size={16} className="ml-1" />
+                  </CardDescription>
+                  <div className="flex items-center text-sm font-bold text-primary-600 group-hover:gap-2 transition-all">
+                    View Solution <ArrowRight size={18} className="ml-1" />
                   </div>
                 </Card>
-              </a>
+              </motion.a>
             );
           })}
         </div>
