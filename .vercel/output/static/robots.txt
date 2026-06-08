@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://skywardhr.com/sitemap-index.xml

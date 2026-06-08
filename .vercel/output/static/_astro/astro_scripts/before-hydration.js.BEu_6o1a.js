@@ -1,1 +1,0 @@
-import{r as t}from"../index.DrotdfmR.js";await t({appearance:{elements:{socialButtonsBlockButton:"hidden",socialButtonsSeparator:"hidden"}},sdkMetadata:{version:"3.3.3",name:"@clerk/astro",environment:"production"}});

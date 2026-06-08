@@ -38,9 +38,9 @@ export default function AIChatAssistant() {
   };
 
   return (
-    <div className="fixed bottom-8 right-8 z-[60]">
+    <div className="fixed bottom-8 right-8 z-60">
       {isOpen ? (
-        <div className="w-80 sm:w-[400px] h-[600px] bg-background border border-border rounded-[32px] shadow-2xl flex flex-col overflow-hidden animate-fade-up">
+        <div className="w-80 sm:w-100 h-150 bg-background border border-border rounded-4xl shadow-2xl flex flex-col overflow-hidden animate-fade-up">
           {/* Header */}
           <div className="p-6 bg-text-primary text-background flex justify-between items-center relative overflow-hidden">
             <div className="flex items-center gap-3 relative z-10">
@@ -55,7 +55,7 @@ export default function AIChatAssistant() {
             <button onClick={() => setIsOpen(false)} className="hover:bg-white/10 p-2 rounded-xl transition-all relative z-10 text-white">
               <X size={20} />
             </button>
-            <div className="absolute -bottom-12 -right-12 w-32 h-32 bg-primary-600/20 blur-[40px] rounded-full pointer-events-none" />
+            <div className="absolute -bottom-12 -right-12 w-32 h-32 bg-primary-600/20 blur-2xl rounded-full pointer-events-none" />
           </div>
 
           {/* Messages */}
@@ -95,7 +95,7 @@ export default function AIChatAssistant() {
                 onClick={handleSend}
                 isLoading={loading}
                 size="icon"
-                className="h-12 w-12 min-w-[48px] rounded-xl"
+                className="h-12 w-12 min-w-12 rounded-xl"
               >
                 <Send size={18} />
               </Button>
@@ -105,7 +105,7 @@ export default function AIChatAssistant() {
       ) : (
         <button 
           onClick={() => setIsOpen(true)}
-          className="w-16 h-16 bg-primary-600 text-white rounded-[24px] shadow-lifted hover:shadow-glow transition-all flex items-center justify-center transform hover:scale-110 group relative"
+          className="w-16 h-16 bg-primary-600 text-white rounded-4xl shadow-lifted hover:shadow-glow transition-all flex items-center justify-center transform hover:scale-110 group relative"
         >
           <Sparkles className="group-hover:rotate-12 transition-transform" size={28} />
           <span className="absolute -top-1 -right-1 w-4 h-4 bg-danger border-4 border-background rounded-full"></span>
