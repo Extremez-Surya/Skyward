@@ -8,7 +8,7 @@ const isCandidateRoute = createRouteMatcher(['/candidate(.*)']);
 const isApiRoute = createRouteMatcher(['/api(.*)']);
 const hasClerkConfig = Boolean(import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY && import.meta.env.CLERK_SECRET_KEY);
 
-const noopMiddleware = async (_auth: unknown, _context: unknown, next: () => Promise<Response>) => next();
+const noopMiddleware = async (_context: unknown, next: () => Promise<Response>) => next();
 
 export const onRequest = hasClerkConfig
     ? clerkMiddleware(async (auth, context, next) => {
