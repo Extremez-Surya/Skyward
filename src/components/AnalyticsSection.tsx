@@ -39,6 +39,8 @@ const stats = [
   { label: 'Uptime Reliability', value: '99%', description: 'Guaranteed workforce availability' },
 ];
 
+const barHeights = [32, 58, 44, 72, 38, 66, 84, 49, 61, 52, 77, 88, 41, 69, 56, 91, 47, 63, 52, 79, 36, 71, 57, 83, 45, 68, 54, 76, 39, 64, 59, 86, 42, 67, 53, 80, 37, 62, 58, 74];
+
 export default function AnalyticsSection() {
   return (
     <section className="section-padding bg-background border-y border-border overflow-hidden relative">
@@ -90,11 +92,11 @@ export default function AnalyticsSection() {
         {/* Animated Bar visualization */}
         <div className="mt-32 relative">
           <div className="flex items-end gap-1 sm:gap-2 h-64">
-            {Array.from({ length: 40 }).map((_, i) => (
+            {barHeights.map((height, i) => (
               <motion.div
                 key={i}
                 initial={{ height: 0 }}
-                whileInView={{ height: `${20 + Math.random() * 80}%` }}
+                whileInView={{ height: `${height}%` }}
                 viewport={{ once: true }}
                 transition={{ duration: 1, delay: i * 0.02, ease: "easeOut" }}
                 className={`flex-1 rounded-t ${i % 3 === 0 ? 'bg-primary-500' : i % 3 === 1 ? 'bg-primary-400' : 'bg-primary-600'} opacity-40 hover:opacity-100 transition-opacity`}
