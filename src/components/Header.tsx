@@ -66,11 +66,11 @@ export default function Header() {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-100 transition-all duration-500 ${
         isScrolled || mobileMenuOpen ? 'bg-background/90 backdrop-blur-xl border-b border-border py-4 shadow-sm' : 'bg-transparent py-6'
       }`}
     >
-      <div className="container-custom flex justify-between items-center relative z-[101]">
+      <div className="container-custom flex justify-between items-center relative z-101">
         <a href="/" className="flex items-center gap-2 group">
           <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center shadow-premium transform group-hover:scale-110 transition-transform duration-300">
             <ShieldCheck className="text-white" size={24} />
@@ -95,7 +95,14 @@ export default function Header() {
         {/* Desktop CTA & Auth */}
         <div className="hidden lg:flex items-center gap-6">
           <ThemeToggle />
-          {isLoaded && !isSignedIn && (
+          {isLoaded && isSignedIn ? (
+            <>
+              <a href="/dashboard" className="text-sm font-semibold text-text-primary hover:text-primary-600 transition-colors">
+                Dashboard
+              </a>
+              <UserButton />
+            </>
+          ) : (
             <>
               <a href="/sign-in" className="text-sm font-semibold text-text-primary hover:text-primary-600 transition-colors">
                 Login
@@ -109,14 +116,6 @@ export default function Header() {
               >
                 Get Started
               </Button>
-            </>
-          )}
-          {isLoaded && isSignedIn && (
-            <>
-              <a href="/dashboard" className="text-sm font-semibold text-text-primary hover:text-primary-600 transition-colors">
-                Dashboard
-              </a>
-              <UserButton />
             </>
           )}
         </div>
@@ -164,7 +163,7 @@ export default function Header() {
             initial="closed"
             animate="open"
             exit="closed"
-            className="lg:hidden fixed inset-0 bg-background z-[90] flex flex-col pt-32 pb-10 px-6"
+            className="lg:hidden fixed inset-0 bg-background z-90 flex flex-col pt-32 pb-10 px-6"
           >
             <div className="flex flex-col gap-6 overflow-y-auto">
               {navLinks.map((link) => (
@@ -185,27 +184,7 @@ export default function Header() {
               variants={itemVariants}
               className="mt-auto pt-10 border-t border-border flex flex-col gap-4"
             >
-              {isLoaded && !isSignedIn && (
-                <>
-                  <Button 
-                    variant="secondary" 
-                    size="lg"
-                    className="w-full rounded-2xl"
-                    onClick={() => window.location.href = '/sign-in'}
-                  >
-                    Login to Account
-                  </Button>
-                  <Button 
-                    variant="primary"
-                    size="lg"
-                    className="w-full rounded-2xl"
-                    onClick={() => window.location.href = '/contact'}
-                  >
-                    Get Started Now
-                  </Button>
-                </>
-              )}
-              {isLoaded && isSignedIn && (
+              {isLoaded && isSignedIn ? (
                 <>
                   <Button 
                     variant="primary"
@@ -217,6 +196,27 @@ export default function Header() {
                   </Button>
                   <div className="flex justify-center p-4 bg-surface rounded-2xl">
                     <UserButton showName />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Button 
+                    variant="secondary" 
+                    size="lg"
+                    className="w-full rounded-2xl"
+                    onClick={() => window.location.href = '/sign-in'}
+                  >
+                    Login to Account
+                  </Button>
+                  <div className="flex justify-center p-4 bg-surface rounded-2xl">
+                    <Button 
+                      variant="primary"
+                      size="lg"
+                      className="w-full rounded-2xl"
+                      onClick={() => window.location.href = '/contact'}
+                    >
+                      Get Started Now
+                    </Button>
                   </div>
                 </>
               )}
