@@ -7,13 +7,26 @@ import AnalyticsChart from '../../components/AnalyticsChart';
 import { Users, UserPlus, Briefcase, FileText, Zap } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 
-const { userId } = Astro.locals.auth();
+// Clerk auth is enforced by src/middleware.ts for /admin routes.
+// So the page itself can safely derive the currently authenticated user id
+// via the API route used elsewhere in the app.
+
+const authResp = await fetch('/api/auth/me');
+
+if (!authResp.ok) {
+  return Astro.redirect('/sign-in');
+}
+
+const authJson = (await authResp.json()) as { userId?: string };
+const userId = authJson.userId;
 
 if (!userId) {
   return Astro.redirect('/sign-in');
 }
 
 const profile = await getUserProfile(userId);
+
+
 
 if (!profile || profile.role !== 'admin') {
   return Astro.redirect('/dashboard');

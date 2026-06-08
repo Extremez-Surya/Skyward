@@ -6,7 +6,7 @@ import CandidateDocumentUpload from '../../components/candidate/CandidateDocumen
 import { ShieldCheck, CheckCircle2, Clock, UploadCloud } from 'lucide-react';
 import { Card, CardTitle, CardDescription } from '../../components/ui/Card';
 
-const { userId } = Astro.locals.auth();
+const { userId } = (Astro.locals as any).auth();
 
 if (!userId) {
   return Astro.redirect('/sign-in');
