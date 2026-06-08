@@ -21,7 +21,13 @@ if (fs.existsSync(envPath)) {
   });
 }
 
-console.log('Environment variables loaded manually.');
+const clerkPublishableKey = process.env.CLERK_PUBLISHABLE_KEY;
+
+if (!clerkPublishableKey) {
+  console.warn(
+    '[Clerk] CLERK_PUBLISHABLE_KEY is not set. Skipping @clerk/astro integration to prevent runtime crashes.'
+  );
+}
 
 // https://astro.build/config
 export default defineConfig({
@@ -35,13 +41,18 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap(),
-    clerk({
-      appearance: {
-        elements: {
-          socialButtonsBlockButton: 'hidden',
-          socialButtonsSeparator: 'hidden',
-        }
-      }
-    })
+    ...(clerkPublishableKey
+      ? [
+          clerk({
+            appearance: {
+              elements: {
+                socialButtonsBlockButton: 'hidden',
+                socialButtonsSeparator: 'hidden',
+              }
+            }
+          })
+        ]
+      : [])
   ]
-});;
+});
+
