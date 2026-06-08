@@ -5,5 +5,6 @@
 // During CI/Vercel builds without Clerk keys, Vite/Rollup fails to resolve
 // the virtual module. Aliasing this file prevents the build from crashing.
 
-export {}; 
+export const isStaticOutput = false;
+
 
