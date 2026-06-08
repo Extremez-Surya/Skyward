@@ -5,7 +5,9 @@
     "**/*"
   ],
   "exclude": [
-    "dist"
+    "dist",
+    ".vercel",
+    ".vercel/output"
   ],
   "compilerOptions": {
     "jsx": "react-jsx",
