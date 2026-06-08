@@ -6,8 +6,12 @@ const isHRRoute = createRouteMatcher(['/hr(.*)']);
 const isClientRoute = createRouteMatcher(['/client(.*)']);
 const isCandidateRoute = createRouteMatcher(['/candidate(.*)']);
 const isApiRoute = createRouteMatcher(['/api(.*)']);
+const hasClerkConfig = Boolean(import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY && import.meta.env.CLERK_SECRET_KEY);
 
-export const onRequest = clerkMiddleware(async (auth, context, next) => {
+const noopMiddleware = async (_auth: unknown, _context: unknown, next: () => Promise<Response>) => next();
+
+export const onRequest = hasClerkConfig
+    ? clerkMiddleware(async (auth, context, next) => {
   const { userId, redirectToSignIn } = auth();
 
   // Protect all dashboard routes
@@ -102,4 +106,5 @@ export const onRequest = clerkMiddleware(async (auth, context, next) => {
   }
 
   return next();
-});
+})
+    : noopMiddleware;
