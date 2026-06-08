@@ -5,7 +5,10 @@ import AnalyticsChart from '../../components/AnalyticsChart';
 import { Users, CalendarCheck, Clock, ArrowRight, Zap, FileText } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 
-const { userId } = Astro.locals.auth();
+// Astro locals auth() is provided by Clerk middleware when available.
+// During builds without Clerk keys, avoid TS/type errors by falling back to undefined.
+const userId = (Astro.locals as any)?.auth?.()?.userId;
+
 
 if (!userId) {
   return Astro.redirect('/sign-in');
