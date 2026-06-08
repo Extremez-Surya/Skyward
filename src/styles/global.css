@@ -185,21 +185,21 @@
   }
 
   .section-padding {
-    padding-top: 160px;
-    padding-bottom: 160px;
+    padding-top: 112px;
+    padding-bottom: 112px;
   }
 
   @media (max-width: 1024px) {
     .section-padding {
-      padding-top: 96px;
-      padding-bottom: 96px;
+      padding-top: 80px;
+      padding-bottom: 80px;
     }
   }
 
   @media (max-width: 768px) {
     .section-padding {
-      padding-top: 72px;
-      padding-bottom: 72px;
+      padding-top: 64px;
+      padding-bottom: 64px;
     }
   }
 

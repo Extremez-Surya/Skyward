@@ -5,7 +5,7 @@ import { Button } from './ui/Button';
 
 const DashboardPreview = () => {
   return (
-    <div className="relative w-full aspect-[4/3] bg-card rounded-2xl shadow-2xl border border-border p-6 overflow-hidden group">
+    <div className="relative w-full aspect-4/3 bg-card rounded-2xl shadow-2xl border border-border p-6 overflow-hidden group">
       {/* Sidebar placeholder */}
       <div className="absolute left-0 top-0 bottom-0 w-16 border-r border-border bg-surface/50 backdrop-blur-sm flex flex-col items-center py-6 gap-6">
         <div className="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center text-white shadow-lg shadow-primary-600/20">
@@ -71,7 +71,7 @@ const DashboardPreview = () => {
                 initial={{ height: 0 }}
                 animate={{ height: `${h}%` }}
                 transition={{ duration: 1, delay: 0.5 + i * 0.05 }}
-                className="flex-1 bg-gradient-to-t from-primary-600/40 to-primary-600/5 rounded-t-sm group-hover/chart:from-primary-600/60 transition-colors"
+                className="flex-1 bg-linear-to-t from-primary-600/40 to-primary-600/5 rounded-t-sm group-hover/chart:from-primary-600/60 transition-colors"
               />
             ))}
           </div>
@@ -157,7 +157,7 @@ export default function Hero() {
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-text-primary mb-6 text-balance leading-[1.1]"
             >
               Professional workforce solutions for <br className="hidden md:block" />
-              <span className="bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">serious businesses.</span>
+              <span className="bg-linear-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">serious businesses.</span>
             </motion.h1>
 
             <motion.p 
@@ -187,6 +187,17 @@ export default function Hero() {
               >
                 View Solutions
               </Button>
+            </motion.div>
+
+            <motion.div
+              variants={item}
+              className="mt-8 lg:hidden"
+            >
+              <div className="rounded-[28px] border border-border bg-card/90 p-4 shadow-2xl overflow-hidden">
+                <div className="scale-[0.88] origin-top">
+                  <DashboardPreview />
+                </div>
+              </div>
             </motion.div>
 
             <motion.div 
